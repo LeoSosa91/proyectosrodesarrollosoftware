@@ -46,5 +46,10 @@ $(".btnModificarCliente").click(function () {
       })
 })
 $(".btnDeshabilitarCliente").click(function () {
-    console.log("btndes");
+    id=$(this).parents("tr").find(".cliente").attr("data-id");
+    $("#idUserDelete").val(id);
+})
+$(".btnHabilitarCliente").click(function () {
+    id=$(this).parents("tr").find(".cliente").attr("data-id");
+    $("#idUserHabilitar").val(id);
 })

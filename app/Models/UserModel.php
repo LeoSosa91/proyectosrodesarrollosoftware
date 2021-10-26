@@ -15,7 +15,7 @@ class UserModel extends Model
     protected $returnType = User::class;
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id_user','username', 'usersurname','dniUsuario','userBirthday','useradress','usertel','useremail','password','tokenPassword','dateTokenPassword','id_group'];
+    protected $allowedFields = ['id_user','username', 'usersurname','dniUsuario','userBirthday','useradress','usertel','useremail','password','tokenPassword','dateTokenPassword','id_group','deleted_at'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';

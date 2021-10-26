@@ -23,6 +23,7 @@
                             <th>Nombre</th>
                             <th>Fecha de Nacimiento</th>
                             <th>Email</th>
+                            <th>Estado</th>
                             <th>Gestionar</th>
                         </tr>
                     </thead>
@@ -35,17 +36,33 @@
                           echo '<td role="row">'.$cliente['username'].'</td>';
                           echo '<td role="row">'.date("d/m/Y", strtotime($cliente['userBirthday'])).'</td>';
                           echo '<td role="row">'.$cliente['useremail'].'</td>';
-                          echo '<td role="row">
+                          if ($cliente['deleted_at']!=null) {
+                            echo'<td role="row">Deshabilitado</td>';
+                            echo '<td role="row">
                             <button type="button" class="btn btn-outline-info btnPenalidades" data-bs-toggle="modal" data-bs-target="#modalPenalidad" title="Ver Penalidades">
                               <i class="far fa-id-badge"></i> 
                             </button>
                             <button type="button" class="btn btn-outline-warning btnModificarCliente" data-bs-toggle="modal" data-bs-target="#modalClients" title="Modificar">
                               <i class="fas fa-edit mr-2"></i> 
                             </button>
-                            <button type="button" class="btn btn-outline-danger btnDeshabilitarCliente" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete" title="Deshabilitar">
-                              <i class="fas fa-trash mr-2"></i>
+                            <button type="button" class="btn btn-outline-success btnHabilitarCliente" data-bs-toggle="modal" data-bs-target="#modalConfirmarHabilitacion" title="Habilitar">
+                              <i class="fas fa-user-plus"></i>
                             </button>
-                          </td>';
+                            </td>';
+                          }else{
+                            echo'<td role="row">Habilitado</td>';
+                            echo '<td role="row">
+                              <button type="button" class="btn btn-outline-info btnPenalidades" data-bs-toggle="modal" data-bs-target="#modalPenalidad" title="Ver Penalidades">
+                                <i class="far fa-id-badge"></i> 
+                              </button>
+                              <button type="button" class="btn btn-outline-warning btnModificarCliente" data-bs-toggle="modal" data-bs-target="#modalClients" title="Modificar">
+                                <i class="fas fa-edit mr-2"></i> 
+                              </button>
+                              <button type="button" class="btn btn-outline-danger btnDeshabilitarCliente" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete" title="Deshabilitar">
+                                <i class="fas fa-trash mr-2"></i>
+                              </button>
+                            </td>';
+                          }
                           echo '</tr>';
                         }
                       ?>
@@ -149,6 +166,25 @@
   </div>
 </div>
 <!-- modalClients -->
+<!-- modalConfirmarHabilitacion -->
+<div class="modal fade" id="modalConfirmarHabilitacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Estas seguro de Habilitar?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <form action="<?=base_url('/admin/habilitarCliente')?>" method="post">
+        <input type="hidden" name="idUserHabilitar" id="idUserHabilitar">
+        <button type="submit" class="btn btn-success">SI</button>
+        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">NO</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modalConfirmarHabilitacion -->
 <!-- modalConfirmDelete -->
 <div class="modal fade" id="modalConfirmDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -157,12 +193,12 @@
         <h5 class="modal-title" id="staticBackdropLabel">Estas seguro de eliminar?</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        ...
-      </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger">SI</button>
+        <form action="<?=base_url('/admin/borrarCliente')?>" method="post">
+        <input type="hidden" name="idUserDelete" id="idUserDelete">
+        <button type="submit" class="btn btn-danger">SI</button>
         <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">NO</button>
+        </form>
       </div>
     </div>
   </div>

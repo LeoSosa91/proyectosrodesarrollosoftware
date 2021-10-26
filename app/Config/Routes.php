@@ -96,6 +96,8 @@ $routes->group('admin',['namespace' => 'App\Controllers\Admin', 'filter'=>'auth:
 	$routes->post('verificarPenalidades','Admin::verificarPenalidades');
 	$routes->post('cargarDatosCliente','Admin::cargarDatosCliente');
 	$routes->post('guardarCliente','Admin::guardarCliente');
+	$routes->post('borrarCliente','Admin::borrarCliente');
+	$routes->post('habilitarCliente','Admin::habilitarCliente');
 	// $routes->add('tableEdit', 'Admin::tableEdit',['as'=>'tableEdit']);
 	$routes->add('listadoClientes', 'Admin::listadoClientes',['as'=>'listadoClientes']);
 	// $routes->post('guardarInfoPersonal', 'Admin::guardarInfoPersonal',['as'=>'guardarInfoPersonalAdmin']);

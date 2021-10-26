@@ -696,29 +696,50 @@ public function obtenerReporteReservasDelDia($fechaInicio,$fechaFinal){
             echo json_encode(array("status" => false));
         }
     }
+    public function habilitarCliente(){
+        $request= \Config\Services::request();
+        $id=$request->getPostGet('idUserHabilitar');
+        
+        $UserModel=model('UserModel');
+        $data = [
+            'deleted_at'=>null
+        ];
+        $UserModel->update($id, $data);
+        // $UserModel->save(['id_user'=>$id,'id_group'=>3,'updated_at'=>null]);
+        // dd($id);
+        return  redirect()->route('listadoClientes');
+    }
+    public function borrarCliente(){
+        $request= \Config\Services::request();
+        $id=$request->getPostGet('idUserDelete');
+        
+        $UserModel=model('UserModel');
+        $UserModel->delete($id);
+        // dd($id);
+        return  redirect()->route('listadoClientes');
+    }
     public function guardarCliente(){
-        $userModel=model('UserModel');
+        
+        $db = \Config\Database::connect();
         $request= \Config\Services::request();
         $errorAlert="";
-        $data=array(
+        $user=array(
             'dniUsuario'=>$request->getPostGet('dniUsuario'),
             'username'=>$request->getPostGet('nombreUsuario'),
-            'surname'=>$request->getPostGet('apellidoUsuario'),
+            'usersurname'=>$request->getPostGet('apellidoUsuario'),
             'useremail'=>$request->getPostGet('correoUsuario'),
-            'userBirthdat'=>$request->getPostGet('fechaNacUsuario'),
+            'userBirthday'=>$request->getPostGet('fechaNacUsuario'),
             'useradress'=>$request->getPostGet('direccionUsuario'),
             'usertel'=>$request->getPostGet('telefonoUsuario'),
-            'id_user'=>$request->getPostGet('idUser'),
         );
-        // dd($data);
-        $userModel->save($data);
-        if ($userModel->save($data)===false) {
+        $data=[
+            'id_user'=>$request->getPostGet('idUser'),
+        ];
+        $query=$db->table('user')->where($data)->update($user);
+        if ($query===false) {
             echo('mal');
-            dd();
-            exit;
         }else{
             echo('bien');
-            dd();
         }
         // ->where('id_user', $request->getPostGet('idUser'))
         // ->set($data)
