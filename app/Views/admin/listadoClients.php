@@ -19,175 +19,37 @@
                     <thead>
                         <tr>
                             <th>DNI</th>
-                            <th>Nombre</th>
                             <th>Apellido</th>
+                            <th>Nombre</th>
                             <th>Fecha de Nacimiento</th>
+                            <th>Email</th>
                             <th>Gestionar</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr role="row" class="odd">
-                        <td scope="row" class="numero" id="35699541
-                        ">35699541</td>
-                        <td>Agustina</td>
-                        <td>Calderon</td>
-                        <td>2000-05-11</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalPenalidad">
-                            <i class="fas fa-edit mr-2"></i> Ver Penalidades
+                      <?php
+                        foreach ($listadoClientes as $cliente) {
+                          echo '<tr role="row">';
+                          echo '<td scope="row" class="cliente" data-id="'.$cliente['id_user'].'">'.$cliente['dniUsuario'].'</td>';
+                          echo '<td role="row">'.$cliente['usersurname'].'</td>';
+                          echo '<td role="row">'.$cliente['username'].'</td>';
+                          echo '<td role="row">'.date("d/m/Y", strtotime($cliente['userBirthday'])).'</td>';
+                          echo '<td role="row">'.$cliente['useremail'].'</td>';
+                          echo '<td role="row">
+                            <button type="button" class="btn btn-outline-info btnPenalidades" data-bs-toggle="modal" data-bs-target="#modalPenalidad" title="Ver Penalidades">
+                              <i class="far fa-id-badge"></i> 
                             </button>
-                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modalClients">
-                            <i class="fas fa-edit mr-2"></i> Modificar
+                            <button type="button" class="btn btn-outline-warning btnModificarCliente" data-bs-toggle="modal" data-bs-target="#modalClients" title="Modificar">
+                              <i class="fas fa-edit mr-2"></i> 
                             </button>
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete">
-                            <i class="fas fa-trash mr-2"></i> Eliminar
+                            <button type="button" class="btn btn-outline-danger btnDeshabilitarCliente" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete" title="Deshabilitar">
+                              <i class="fas fa-trash mr-2"></i>
                             </button>
-                        </td>
-                        </tr>
-                        <tr role="row" class="even">
-                        <td scope="row" class="numero" id="36213365
-                        ">36213365</td>
-                        <td>Pablo</td>
-                        <td>Diaz</td>
-                        <td>1990-12-09</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalPenalidad">
-                            <i class="fas fa-edit mr-2"></i> Ver Penalidades
-                            </button>
-                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modalClients">
-                            <i class="fas fa-edit mr-2"></i> Modificar
-                            </button>
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete">
-                            <i class="fas fa-trash mr-2"></i> Eliminar
-                            </button>
-                        </td>
-                        </tr>
-                        <tr role="row" class="odd">
-                        <td scope="row" class="numero" id="30254843
-                        ">30254843</td>
-                        <td>Carlos</td>
-                        <td>Barrientos</td>
-                        <td>1980-11-09</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalPenalidad">
-                            <i class="fas fa-edit mr-2"></i> Ver Penalidades
-                            </button>
-                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modalClients">
-                            <i class="fas fa-edit mr-2"></i> Modificar
-                            </button>
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete">
-                            <i class="fas fa-trash mr-2"></i> Eliminar
-                            </button>
-                        </td>
-                        </tr>
-                        <tr role="row" class="even">
-                        <td scope="row" class="numero" id="30641128
-                        ">30641128</td>
-                        <td>Alejandra</td>
-                        <td>Martinez</td>
-                        <td>1979-06-16</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalPenalidad">
-                            <i class="fas fa-edit mr-2"></i> Ver Penalidades
-                            </button>
-                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modalClients">
-                            <i class="fas fa-edit mr-2"></i> Modificar
-                            </button>
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete">
-                            <i class="fas fa-trash mr-2"></i> Eliminar
-                            </button>
-                        </td>
-                        </tr>
-                        <tr  role="row" class="odd">
-                        <td scope="row" class="numero" id="35285621
-                        ">35285621</td>
-                        <td>Aldana</td>
-                        <td>Martinez</td>
-                        <td>1990-12-16</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalPenalidad">
-                            <i class="fas fa-edit mr-2"></i> Ver Penalidades
-                            </button>
-                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modalClients">
-                            <i class="fas fa-edit mr-2"></i> Modificar
-                            </button>
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete">
-                            <i class="fas fa-trash mr-2"></i> Eliminar
-                            </button>
-                        </td>
-                        </tr>
-                        <tr role="row" class="even">
-                        <td scope="row" class="numero" id="36213585
-                        ">36213585</td>
-                        <td>Julieta</td>
-                        <td>Diaz</td>
-                        <td>1991-09-14</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalPenalidad">
-                            <i class="fas fa-edit mr-2"></i> Ver Penalidades
-                            </button>
-                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modalClients">
-                            <i class="fas fa-edit mr-2"></i> Modificar
-                            </button>
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete">
-                            <i class="fas fa-trash mr-2"></i> Eliminar
-                            </button>
-                        </td>
-                        </tr>
-                        <tr role="row" class="odd">
-                        <td scope="row" class="numero" id="28456213
-                        ">28456213</td>
-                        <td>Cintia</td>
-                        <td>Gomez</td>
-                        <td>1970-11-10</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalPenalidad">
-                            <i class="fas fa-edit mr-2"></i> Ver Penalidades
-                            </button>
-                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modalClients">
-                            <i class="fas fa-edit mr-2"></i> Modificar
-                            </button>
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete">
-                            <i class="fas fa-trash mr-2"></i> Eliminar
-                            </button>
-                        </td>
-                        </tr>
-                        <tr role="row" class="even">
-                        <td scope="row" class="numero" id="45678912
-                        ">45678912</td>
-                        <td>Ariel</td>
-                        <td>Perez</td>
-                        <td>1990-05-08</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalPenalidad">
-                            <i class="fas fa-edit mr-2"></i> Ver Penalidades
-                            </button>
-                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modalClients">
-                            <i class="fas fa-edit mr-2"></i> Modificar
-                            </button>
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete">
-                            <i class="fas fa-trash mr-2"></i> Eliminar
-                            </button>
-                        </td>
-                        </tr>
-                        <tr role="row" class="odd">
-                        <td scope="row" class="numero" id="14835073
-                        ">14835073</td>
-                        <td>Gladys del Carmen</td>
-                        <td>Carimoney</td>
-                        <td>1962-01-20</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalPenalidad">
-                            <i class="fas fa-edit mr-2"></i> Ver Penalidades
-                            </button>
-                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modalClients">
-                            <i class="fas fa-edit mr-2"></i> Modificar
-                            </button>
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete">
-                            <i class="fas fa-trash mr-2"></i> Eliminar
-                            </button>
-                        </td>
-                        </tr>
+                          </td>';
+                          echo '</tr>';
+                        }
+                      ?>
+                        
                     </tbody>
                 </table>
             </div>
@@ -224,6 +86,9 @@
                     <th>Penalidades</th>
                 </thead>
                 <tbody>
+                  <tr>
+                    <td colspan="2">Sin datos</td>
+                  </tr>
                 </tbody>
         </table>
       </div>
@@ -243,10 +108,42 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
+        <form action="<?=base_url('/admin/guardarCliente')?>" method="post">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
+            <input type="text" id="dniUsuario" name="dniUsuario" class="form-control" placeholder="DNI" aria-label="DNI" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
+            <input type="text" id="apellidoUsuario" name="apellidoUsuario" class="form-control" placeholder="Apellido" aria-label="Apellido" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
+            <input type="text" id="nombreUsuario" name="nombreUsuario" class="form-control" placeholder="Nombre" aria-label="Nombre" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
+            <input type="date" id="fechaNacUsuario" name="fechaNacUsuario" class="form-control" placeholder="Fecha de nacimiento" aria-label="Fecha de nacimiento" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
+            <input type="email" id="correoUsuario" name="correoUsuario" class="form-control" placeholder="Correo electronico" aria-label="Correo electronico" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
+            <input type="text" id="direccionUsuario" name="direccionUsuario" class="form-control" placeholder="Direccion" aria-label="Direccion" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
+            <input type="tel" id="telefonoUsuario" name="telefonoUsuario" class="form-control" placeholder="Telefono/Celular" aria-label="Telefono/Celular" aria-describedby="basic-addon1">
+          </div>
+          <input type="hidden" name="idUser" id="idUser">
+          <input type="submit" name="btnGuardarCambios" class="btn btn-success"value="Guardar">
+        </form>
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
@@ -271,15 +168,22 @@
   </div>
 </div>
 <!-- modalConfirmDelete -->
-<?//$this->include('clients/footer');?>
-<?//$this->include('clients/jsClient');?>
-<!-- 
+<?=$this->include('front/footer');?>
+<?=$this->include('admin/jsAdmin');?>
+
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
+<script type="text/javascript" src="<?=base_url();?>/assets/js/gestionCliente.js"></script>
 <script>
+    var baseURL= "<?= base_url();?>";
     $(document).ready(function() {
-    $('#example').DataTable( {
+      $('#example').DataTable({
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-        }
+        },
+        "scrollY":        "400px",
+        "scrollCollapse": true,
+        "paging":         true
+      });
     } );
-} );
-</script> -->
+</script>

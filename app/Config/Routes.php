@@ -93,6 +93,9 @@ $routes->group('admin',['namespace' => 'App\Controllers\Admin', 'filter'=>'auth:
 	$routes->add('report', 'Admin::report',['as'=>'reportAdmin']);
 	$routes->add('reporteRanking','Admin::crearReporte');
 	$routes->post('imprimirReporte','Admin::imprimirReporte');
+	$routes->post('verificarPenalidades','Admin::verificarPenalidades');
+	$routes->post('cargarDatosCliente','Admin::cargarDatosCliente');
+	$routes->post('guardarCliente','Admin::guardarCliente');
 	// $routes->add('tableEdit', 'Admin::tableEdit',['as'=>'tableEdit']);
 	$routes->add('listadoClientes', 'Admin::listadoClientes',['as'=>'listadoClientes']);
 	// $routes->post('guardarInfoPersonal', 'Admin::guardarInfoPersonal',['as'=>'guardarInfoPersonalAdmin']);

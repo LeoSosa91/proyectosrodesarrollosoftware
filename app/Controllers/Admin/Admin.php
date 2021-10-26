@@ -523,7 +523,8 @@ public function obtenerReporteReservasDelDia($fechaInicio,$fechaFinal){
             }
         }
 
-    }else{
+    }else
+    {
 
     $db = \Config\Database::connect();
 
@@ -666,9 +667,86 @@ public function obtenerReporteReservasDelDia($fechaInicio,$fechaFinal){
 	}
 	public function listadoClientes()
 	{
-		$data['title']="Clientes";
-		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Admin/listadoClients').view('Admin/footer');
+		$db = \Config\Database::connect();
+        $data['title']="Clientes";
+        $data['listadoClientes']=$db->table('user')->getWhere(['id_group'=>3])->getResultArray();
+        //.view('Admin/footer')
+		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Admin/listadoClients',$data);
 	}
+    public function verificarPenalidades(){
+        $db = \Config\Database::connect();
+        $request= \Config\Services::request();
+        $id=$request->getPostGet('id');
+        $query=$db->query('call verPenalidades("'.$id.'")');
+        if($query){
+        echo json_encode(array("status" => true , 'data' => $query->getResultArray()));
+        }else{
+        echo json_encode(array("status" => false));
+        }
+    }
+    public function cargarDatosCliente(){
+        
+        $request= \Config\Services::request();
+        $id=$request->getPostGet('id');
+        $userModel = model('UserModel'); 
+        $data = $userModel->where('id_user', $id)->first();
+        if($data){
+            echo json_encode(array("status" => true , 'data' => $data));
+        }else{
+            echo json_encode(array("status" => false));
+        }
+    }
+    public function guardarCliente(){
+        $userModel=model('UserModel');
+        $request= \Config\Services::request();
+        $errorAlert="";
+        $data=array(
+            'dniUsuario'=>$request->getPostGet('dniUsuario'),
+            'username'=>$request->getPostGet('nombreUsuario'),
+            'surname'=>$request->getPostGet('apellidoUsuario'),
+            'useremail'=>$request->getPostGet('correoUsuario'),
+            'userBirthdat'=>$request->getPostGet('fechaNacUsuario'),
+            'useradress'=>$request->getPostGet('direccionUsuario'),
+            'usertel'=>$request->getPostGet('telefonoUsuario'),
+            'id_user'=>$request->getPostGet('idUser'),
+        );
+        // dd($data);
+        $userModel->save($data);
+        if ($userModel->save($data)===false) {
+            echo('mal');
+            dd();
+            exit;
+        }else{
+            echo('bien');
+            dd();
+        }
+        // ->where('id_user', $request->getPostGet('idUser'))
+        // ->set($data)
+        // ->update();
+        return  redirect()->route('listadoClientes');
+        // if($request->getPostGet('dniUsuario')){
+        //     $data['dniUsuario']=$request->getPostGet('dniUsuario');
+        // }
+        
+        // if($UserModel->save($data)===false){
+        //     $errorAlert='<div class="alert alert-danger alert-dismissible fade show" role="alert"><ul>';
+        //     foreach ($UserModel->errors() as $error) {
+        //         $errorAlert.='<li><strong>'. esc($error).'</strong></li>';
+        //     }
+        //     $errorAlert.='</ul><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+        // }else{
+        //     $errorAlert='<div class="alert alert-success alert-dismissible fade show" role="alert"><strong> Se subio/actualizado a la base de datos el cliente con exito</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+        // }
+
+        // $users = $UserModel->findAll();
+        // $data['users']=$users;
+        // $data['title']="Listado de clientes";
+        // $data['errorAlert']=$errorAlert;
+        // $estructura=view('head',$data).view('nav/nav_admin').view('content/admin/content_admin_client',$data).view('footer').view('scripts');
+        // return $estructura;
+    }
+
+
 	public function promocionAdd()
 	{
 		$data['title']="Promociones";
