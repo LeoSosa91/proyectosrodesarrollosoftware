@@ -707,16 +707,27 @@ public function obtenerReporteReservasDelDia($fechaInicio,$fechaFinal){
         $UserModel->update($id, $data);
         // $UserModel->save(['id_user'=>$id,'id_group'=>3,'updated_at'=>null]);
         // dd($id);
-        return  redirect()->route('listadoClientes');
+        return  redirect()->route('listadoClientes')->with('msg',['type'=> 'success', 'body'=>'Se pudo habilitar con exito al cliente.']);;
     }
     public function borrarCliente(){
         $request= \Config\Services::request();
         $id=$request->getPostGet('idUserDelete');
+        $db      = \Config\Database::connect();
+        $query=$db->query('call verificarClienteReservaEnCurso("'.$id.'")');
+        // dd($query->getResultArray());
+        $flag=null;
+        $mjs='';
+        foreach ($query->getResultArray() as $row) {
+            $mjs= $row['Mensaje'];
+            $flag= $row['flag'];
+        }
         
-        $UserModel=model('UserModel');
-        $UserModel->delete($id);
-        // dd($id);
-        return  redirect()->route('listadoClientes');
+        if ($flag==1) {
+            return  redirect()->route('listadoClientes')->with('msg',['type'=> 'success', 'body'=>$mjs]);
+        }else{
+            return  redirect()->route('listadoClientes')->with('msg',['type'=> 'warning', 'body'=>$mjs]);
+        }
+        
     }
     public function guardarCliente(){
         

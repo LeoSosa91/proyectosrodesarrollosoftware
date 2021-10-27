@@ -15,6 +15,13 @@
         </div>
         <div class="card mb-3" >
             <div class="content p-4">
+                <?php if(session('msg')):?>
+                    <div class="alert alert-<?=session('msg.type')?> alert-dismissible fade show" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                        <div><strong><?=session('msg.body')?></strong></div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif;?>
                 <table id="example" class="table table-striped" style="width:100%; height:100%">
                     <thead>
                         <tr>
