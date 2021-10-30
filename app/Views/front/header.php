@@ -10,7 +10,22 @@
     >
         <span class="navbar-toggler-icon" data-bs-target="#sidebar"></span>
     </button>
-    <a class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold" href="#">SRO</a>
+    <a class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold" href="<?php 
+            switch (session('group')) {
+              case 'Cliente':
+                echo base_url(route_to('homeClient'));
+                break;
+              case 'Administrador':
+                echo base_url(route_to('homeAdmin'));
+                break;
+              case 'Chef':
+                echo base_url(route_to('homeChef'));
+                break;
+              default:
+                # code...
+                break;
+            }
+            ?>">SRO</a>
     <div class="btn-group">
         <a class="nav-link dropdown-toggle text-white ms-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25"

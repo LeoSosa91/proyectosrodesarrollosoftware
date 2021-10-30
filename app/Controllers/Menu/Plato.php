@@ -177,10 +177,6 @@ class Plato extends BaseController{
 				return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Error al agregar plato. Intentelo más tarde']);
 
 			} else {
-				// if ($request->getVar('stateFood')=="2") {
-				// 	$foodModel->where('idPlato', $data['idPlato'])->delete();		
-				// }
-				
 				return  redirect()->back()->with('msg',['type'=> 'success', 'body'=>'Se pudo agregar plato con exito']);
 			}
 			

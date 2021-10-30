@@ -86,7 +86,7 @@
 <!-- modifyOrderModal modal-fullscreen-xl-down-->
 
 <div class="modal fade" id="modifyOrderModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="modifyOrderModal" aria-hidden="true">
-  <div class="modal-dialog ">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Tu pedido</h5>
@@ -149,8 +149,9 @@
                                 <thead>
                                     <tr>
                                     <th>#</th>
-                                    <th>Nombre producto</th>
                                     <th>Nro Pedido</th>
+                                    <th>Nombre producto</th>
+                                    <th>Cantidad</th>
                                     <th>Tipo</th>
                                     <th>Precio</th>
                                     <th>Modificar?</th>

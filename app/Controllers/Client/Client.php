@@ -224,34 +224,53 @@ class Client extends BaseController
 		$request= \Config\Services::request();
         $db = \Config\Database::connect();
 		$idViejo= $request->getPostGet('inputIdAnterior') ;
-        $idNuevo= $request->getPostGet('selectModPedPlatoBebida') ;
-        $nroPedido=intval($request->getPostGet('inputNroPedido')) ;
+        $idNuevo= $request->getPostGet('selectModPedPlatoBebida');
+        $nroPedido=intval($request->getPostGet('inputNroPedido'));
+		$cantidad=intval($request->getPostGet('inputModCantidad'));
 		$tipo=$request->getPostGet('inputTipo');
-		// dd($idNuevo);
+		$idReserva=intval($request->getPostGet('inputIdReserva'));
+		// dd($idReserva);
 		switch ($tipo) {
 			case 'Bebida':
-				$reserva=[
+				$pedido=[
 					'idBebida'=>$idNuevo,
+					'cantidad'=>$cantidad,
 				];
 				$data=[
 					'nroPedido'=>$nroPedido,
 					'idBebida'=>$idViejo,
 				];
-				$query=$db->table('pedidobebida')->where($data)->update($reserva);
+				
+				$query=$db->table('pedidobebida')->where($data)->update($pedido);
+				//dd($pedido);
+				$total=$db->query('call calcularTotalReserva('.$idReserva.')')->getResultArray();
+				// dd(doubleval($total[0]['sum(total)']) );
+				$reserva=[
+					'precioTotalReserva'=>doubleval($total[0]['sum(total)']),
+				];
+				$query1=$db->table('reserva')->where('idReserva',$idReserva)->update($reserva);
+				//dd($db->query('call calcularTotalReserva('.$idReserva.')')->getResultArray());
 				if ($query) {
 					return  redirect()->route('reservasEnCursoClient')->with('msg',['type'=> 'success', 'body'=>'Se modifico con exito su bebida del pedido.']);
 				}
 				return  redirect()->route('reservasEnCursoClient')->with('msg',['type'=> 'danger', 'body'=>'Error, no se pudo modificar bebida de su pedido. Intentelo mas tarde']);
 				break;
 			case 'Plato':
-				$reserva=[
+				$pedido=[
 					'idPlato'=>$idNuevo,
+					'cantidad'=>$cantidad,
 				];
 				$data=[
 					'nroPedido'=>$nroPedido,
 					'idPlato'=>$idViejo,
 				];
-				$query=$db->table('pedidoplato')->where($data)->update($reserva);
+				
+				$query=$db->table('pedidoplato')->where($data)->update($pedido);
+				$total=$db->query('call calcularTotalReserva('.$idReserva.')')->getResultArray();
+				$reserva=[
+					'precioTotalReserva'=>doubleval($total[0]['sum(total)']),
+				];
+				$query1=$db->table('reserva')->where('idReserva',$idReserva)->update($reserva);
 				if ($query) {
 					return  redirect()->route('reservasEnCursoClient')->with('msg',['type'=> 'success', 'body'=>'Se modifico con exito su plato del pedido.']);
 				}

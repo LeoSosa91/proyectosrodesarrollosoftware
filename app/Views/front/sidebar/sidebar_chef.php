@@ -1,5 +1,5 @@
 <li>
-    <a href="<?= route_to('homeChef') ?>" class="nav-link px-3">
+    <a href="<?= base_url(route_to('homeChef')) ?>" class="nav-link px-3">
         <span class="me-2">
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 172 172" style=" fill:#000000;">
                 <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">

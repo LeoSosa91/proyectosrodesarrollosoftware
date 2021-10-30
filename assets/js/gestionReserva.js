@@ -164,12 +164,13 @@ const listarPlatos =()=>{
     }
   });
 }
-const cargarFormModificarPedidoPlatoBebida =(tipo,id,nombre,nroPedido)=>{
+const cargarFormModificarPedidoPlatoBebida =(tipo,id,nombre,nroPedido,cantidad,idReserva)=>{
   $('#contenedorFormModificar').empty()
   $('<form/>').attr({class:'mb-3',id:'formMod',method:'post',action:baseURL+'/clients/reservar/modificarPedidoPlatoBebidaCliente'}).appendTo('#contenedorFormModificar');
   $('<input/>').attr({type:'hidden',id:'inputIdAnterior',name:'inputIdAnterior',class:'form-control',value:id}).appendTo('#formMod');
   $('<input/>').attr({type:'hidden',id:'inputNroPedido',name:'inputNroPedido',class:'form-control',value:nroPedido}).appendTo('#formMod');
   $('<input/>').attr({type:'hidden',id:'inputTipo',name:'inputTipo',class:'form-control',value:tipo}).appendTo('#formMod');
+  $('<input/>').attr({type:'hidden',id:'inputIdReserva',name:'inputIdReserva',class:'form-control',value:idReserva}).appendTo('#formMod');
   switch (tipo) {
     case "Plato":
       $('<div/>').attr({class:'mb-3',id:'contenedorInputModPedPlato'}).appendTo('#formMod');
@@ -178,6 +179,9 @@ const cargarFormModificarPedidoPlatoBebida =(tipo,id,nombre,nroPedido)=>{
       $('<div/>').attr({class:'mb-3',id:'contenedorSelectModPedPlato'}).appendTo('#formMod');
       $('<label/>').attr({class:'form-label',for:'selectModPedPlatoBebida',value:'Platos'}).appendTo('#contenedorSelectModPedPlato').text('Plato nuevo');
       $('<select/>').attr({id:'selectModPedPlatoBebida',name:'selectModPedPlatoBebida',class:'form-select'}).appendTo('#contenedorSelectModPedPlato');
+      $('<div/>').attr({class:'mb-3',id:'contenedorInputModPedPlatoCantidad'}).appendTo('#formMod');
+      $('<label/>').attr({class:'form-label',for:'inputModCantidad'}).appendTo('#contenedorInputModPedPlatoCantidad').text('Cantidad');
+      $('<input/>').attr({type:'number',id:'inputModCantidad',name:'inputModCantidad',class:'form-control', value:cantidad}).appendTo('#contenedorInputModPedPlatoCantidad');
       listarPlatos()    
       break;
     case "Bebida":
@@ -187,6 +191,9 @@ const cargarFormModificarPedidoPlatoBebida =(tipo,id,nombre,nroPedido)=>{
       $('<div/>').attr({class:'mb-3',id:'contenedorSelectModPedBebida'}).appendTo('#formMod');
       $('<label/>').attr({class:'form-label',for:'selectModPedPlatoBebida',value:'Platos'}).appendTo('#contenedorSelectModPedBebida').text('Bebida nueva');
       $('<select/>').attr({id:'selectModPedPlatoBebida',name:'selectModPedPlatoBebida',class:'form-select'}).appendTo('#contenedorSelectModPedBebida');
+      $('<div/>').attr({class:'mb-3',id:'contenedorInputModPedBebidaCantidad'}).appendTo('#formMod');
+      $('<label/>').attr({class:'form-label',for:'inputModCantidad'}).appendTo('#contenedorInputModPedBebidaCantidad').text('Cantidad');
+      $('<input/>').attr({type:'number',id:'inputModCantidad',name:'inputModCantidad',class:'form-control', value:cantidad}).appendTo('#contenedorInputModPedBebidaCantidad');
       listarBebidas()   
       break;
   
@@ -208,21 +215,27 @@ $(document).on('click', '.btnModPedCliente', function (e) {
   let id="";
   let nombre="";
   let nroPedido="";
+  let cantidad=0;
+  let idReserva=0;
   switch ($(this).parents("tr").find(".tipo").attr("tipo")) {
     case 'Plato':
       id=$(this).parents("tr").find(".idPlato").attr("data-id");
       nombre=$(this).parents("tr").find(".idPlato").attr("data-nombre");
       nroPedido=$(this).parents("tr").find(".idPlato").attr("data-nro-pedido");
+      cantidad=$(this).parents("tr").find(".idPlato").attr("data-cantidad");
+      idReserva=$(this).parents("tr").find(".idPlato").attr("data-idReserva");
       break;
     case 'Bebida':
       id=$(this).parents("tr").find(".idBebida").attr("data-id");
       nombre=$(this).parents("tr").find(".idBebida").attr("data-nombre");
       nroPedido=$(this).parents("tr").find(".idBebida").attr("data-nro-pedido");
+      cantidad=$(this).parents("tr").find(".idBebida").attr("data-cantidad");
+      idReserva=$(this).parents("tr").find(".idBebida").attr("data-idReserva");
       break;
     default:
       break;
   }
-  cargarFormModificarPedidoPlatoBebida($(this).parents("tr").find(".tipo").attr("tipo"),id,nombre,nroPedido);
+  cargarFormModificarPedidoPlatoBebida($(this).parents("tr").find(".tipo").attr("tipo"),id,nombre,nroPedido,cantidad,idReserva);
 })
 
 
@@ -232,11 +245,11 @@ const cargarTablaModificarPedidos =(platos,bebidas)=>{
   cont=0;
   platos.forEach(plato=>{
     cont++
-    fila+='<tr> <td class="idPlato" data-id="'+plato['idPlato']+'" data-nombre="'+plato['nombrePlato']+'" data-nro-pedido="'+plato['nroPedido']+'">'+ cont +'</td> <td >'+plato['nombrePlato']+'</td> <td>'+plato['nroPedido']+'</td><td class="tipo" tipo="Plato" > Plato </td> <td>$'+plato['precioPlato']+'</td> <td><a class="btn btn-warning btn-sm btnModPedCliente" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><i class="fas fa-edit mr-2"></i></a></td> </tr>';
+    fila+='<tr> <td class="idPlato" data-id="'+plato['idPlato']+'" data-nombre="'+plato['nombrePlato']+'" data-nro-pedido="'+plato['nroPedido']+'" data-cantidad="'+plato['cantidad']+'" data-idReserva="'+plato['idReserva']+'">'+ cont +'</td> <td >'+plato['nroPedido']+'</td> <td>'+plato['nombrePlato']+'</td><td>'+plato['cantidad']+'</td><td class="tipo" tipo="Plato" > Plato </td> <td>$'+plato['precioPlato']+'</td> <td><a class="btn btn-warning btn-sm btnModPedCliente" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><i class="fas fa-edit mr-2"></i></a></td> </tr>';
   })
   bebidas.forEach(bebida=>{
     cont++
-    fila+='<tr> <td class="idBebida" data-id="'+bebida['idBebida']+'" data-nombre="'+bebida['nombreBebida']+'" data-nro-pedido="'+bebida['nroPedido']+'">'+ cont +'</td> <td>'+bebida['nombreBebida']+'</td> <td>'+bebida['nroPedido']+'</td><td class="tipo" tipo="Bebida" > Bebida </td> <td>$'+bebida['precioBebida']+'</td> <td><a class="btn btn-warning btn-sm btnModPedCliente" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><i class="fas fa-edit mr-2"></i></a></td> </tr>';
+    fila+='<tr> <td class="idBebida" data-id="'+bebida['idBebida']+'" data-nombre="'+bebida['nombreBebida']+'" data-nro-pedido="'+bebida['nroPedido']+'" data-cantidad="'+bebida['cantidad']+'" data-idReserva="'+bebida['idReserva']+'">'+ cont +'</td> <td>'+bebida['nroPedido']+'</td> <td>'+bebida['nombreBebida']+'</td><td>'+bebida['cantidad']+'</td><td class="tipo" tipo="Bebida" > Bebida </td> <td>$'+bebida['precioBebida']+'</td> <td><a class="btn btn-warning btn-sm btnModPedCliente" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><i class="fas fa-edit mr-2"></i></a></td> </tr>';
   })
   $('#tablaPedidoModificar tbody').append(fila);
 
