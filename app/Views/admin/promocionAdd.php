@@ -30,7 +30,7 @@
                             </div>
                         <?php endif;?>    
                         <h4><strong>Agregar promoción</strong></h4>
-                        <form action="<?=route_to('agregarPromocion')?>" method="POST">
+                        <form action="<?=base_url('menu/promocion/agregarPromocion')?>" method="POST">
                             <div class="mb-3">
                                 <label for="inputDescripcionPromocion" class="form-label">Descripción de promoción</label>
                                 <input type="text" class="form-control" id="inputDescripcionPromocion" name="inputDescripcionPromocion" value="<?=old('inputDescripcionPromocion')?>">

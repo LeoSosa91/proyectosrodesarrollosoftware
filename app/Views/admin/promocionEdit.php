@@ -106,7 +106,7 @@
       </div>
       <div class="modal-body">
         <h5 class="modal-title" id="staticBackdropLabel">Modificar</h5>
-            <form action="<?=route_to('editarPromocion')?>" method="POST">
+            <form action="<?=base_url('menu/promocion/editarPromocion')?>" method="POST">
                 <input type="hidden" name="idPromocion" id="idPromocion">
                 <div class="mb-3">
                     <label for="inputDescripcionPromocion" class="form-label">Descripción de promoción</label>

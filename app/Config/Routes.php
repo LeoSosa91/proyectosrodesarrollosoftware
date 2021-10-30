@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use CodeIgniter\Router\Router;
+
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
@@ -48,21 +50,28 @@ $routes->group('menu', function($routes)
 	{
 		$routes->post('buscarBebida', 'Bebida::buscarBebida',['namespace' => 'App\Controllers\Menu']);
 		$routes->post('listarBebidas', 'Bebida::listarBebidas',['namespace' => 'App\Controllers\Menu']);
+		$routes->post('editarBebida', 'Bebida::editarBebida',['namespace' => 'App\Controllers\Menu','as'=>'editarBebida']);
+		$routes->post('agregarBebida', 'Bebida::agregarBebida',['namespace' => 'App\Controllers\Menu','as'=>'agregarBebida']);
 	});
+	
 	$routes->group('plato', function($routes)
 	{
 		$routes->post('listarPlatos','Plato::listarPlatos',['namespace' => 'App\Controllers\Menu']);
 		$routes->post('buscarPlato', 'Plato::buscarPlato',['namespace' => 'App\Controllers\Menu']);
 	});
-
-	// $routes->post('agregarBebida', 'Bebida::agregarBebida',['namespace' => 'App\Controllers\Menu','as'=>'agregarBebida']);
-	// $routes->post('editarBebida', 'Bebida::editarBebida',['namespace' => 'App\Controllers\Menu','as'=>'editarBebida']);
-	// $routes->post('agregarPlato', 'Plato::agregarPlato',['namespace' => 'App\Controllers\Menu','as'=>'agregarPlato']);
+// $routes->post('agregarPlato', 'Plato::agregarPlato',['namespace' => 'App\Controllers\Menu','as'=>'agregarPlato']);
+	
+	
+	
+	$routes->group('promocion', function($routes){
+		$routes->post('buscarPromocion', 'Promocion::buscarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'buscarPromocion']);
+		$routes->post('editarPromocion', 'Promocion::editarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'editarPromocion']);
+		$routes->post('agregarPromocion', 'Promocion::agregarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'agregarPromocion']);
+	});
 
 	// $routes->post('modificarPlato', 'Plato::modificarPlato',['namespace' => 'App\Controllers\Menu','as'=>'modificarPlato']);
-	// $routes->post('buscarPromocion', 'Promocion::buscarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'buscarPromocion']);
-	// $routes->post('editarPromocion', 'Promocion::editarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'editarPromocion']);
-	// $routes->post('agregarPromocion', 'Promocion::agregarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'agregarPromocion']);
+	
+	
 	$routes->post('consultarPromocion', 'Promocion::consultarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'consultarPromocion']);
 });
 

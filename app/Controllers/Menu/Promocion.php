@@ -1,11 +1,11 @@
 <?php namespace App\Controllers\Menu;
 use App\Controllers\BaseController;
-use Faker\Factory;
 class Promocion extends BaseController{
-    public function listarPlatos()
+    public function listarPromociones()
 	{
-		$foodModel= model('FoodModel');
-		return $foodModel->orderBy('tipoPlatos', 'asc')->findAll();
+		$db      = \Config\Database::connect();
+		return $db->table('promocion')->get()->getResultArray();
+		
 	}
 	public function buscarPromocion()
 	{
@@ -106,10 +106,10 @@ class Promocion extends BaseController{
 			$builder = $db->table('promocion');
 
 			if (false===$builder->update($data, ['idPromocion' => $request->getVar('idPromocion')])) {
-				return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Error al modificar bebida. Intentelo más tarde']);
+				return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Error al modificar promoción. Intentelo más tarde']);
 
 			} else {
-				return  redirect()->back()->with('msg',['type'=> 'success', 'body'=>'Se pudo modificar bebida con exito']);
+				return  redirect()->back()->with('msg',['type'=> 'success', 'body'=>'Se pudo modificar promoción con exito']);
 			}
 			
 		}

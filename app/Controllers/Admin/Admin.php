@@ -1,5 +1,6 @@
 <?php namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
+use App\Controllers\Menu\Promocion;
 use App\Entities\User;
 class Admin extends BaseController{
 

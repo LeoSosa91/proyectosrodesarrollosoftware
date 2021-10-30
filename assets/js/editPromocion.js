@@ -8,7 +8,7 @@ const editarPromocion= e=>{
 }
 const añadirAForm= objeto =>{
     $.ajax({
-        url:baseURL+"/menu/buscarPromocion",
+        url:baseURL+"/menu/promocion/buscarPromocion",
             method: 'post',
             data: {id: objeto.querySelector('button').dataset.id},
             dataType: 'json',

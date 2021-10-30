@@ -25,7 +25,7 @@
                 <div class="col-md-12 col-lg-3">
                     <div class="card-body">
                         <h4><strong>Editar bebida</strong></h4>
-                        <form action="<?=route_to('editarBebida')?>" method="post">
+                        <form action="<?=base_url('menu/bebida/editarBebida')?>" method="post">
                             <input type="hidden" name="idBebida" id="idBebida">
                             <div class="mb-3">
                                 <label class="form-label" for="inputNameDrink">Ingrese nombre de bebida</label>
@@ -101,7 +101,8 @@
                             }
                             
                             echo'<td>'.$beverage['precioBebida'].'</td>
-                            <td> 
+                            <td>
+                            
                             <button type="button" class="btn btn-warning" data-id='.$beverage['idBebida'].'>
                                 <span class="text-white">
                                     <i class="fas fa-edit mr-2"></i>
@@ -140,6 +141,8 @@
     </div>
   </div>
 </div>
+
+
 <!--Footer-->
 <footer class="fixed-bottom bg-light text-lg-start mt-3">
     <!-- Copyright -->

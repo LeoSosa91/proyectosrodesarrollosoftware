@@ -1,6 +1,7 @@
 <?php namespace App\Controllers\Menu;
 use App\Controllers\BaseController;
 use Faker\Factory;
+use CodeIgniter\Test\Fabricator;
 
 class Bebida extends BaseController{
 
@@ -70,6 +71,7 @@ class Bebida extends BaseController{
 	{
 		$validation =  \Config\Services::validation();
 		$request= \Config\Services::request();
+		$varDeleted = ($request->getVar('stateDrink')=="0") ? null : date('Y-m-d H:i:s') ;
         $validation->setRules([
 			'inputNameDrink' => 'required|min_length[1]',
 		  	'typeDrink'=>'required|in_list[1,2,3,4]',
@@ -100,12 +102,11 @@ class Bebida extends BaseController{
 		}else {
 
 			$data=array(
-				// 'idBebida'=>$request->getVar('idBebida'),
 				'nombreBebida'=>strtoupper($request->getVar('inputNameDrink')),
-				'tipoBebida'=>intval($request->getVar('typeDrink')),
+				'idCategoriaBebida'=>intval($request->getVar('typeDrink')),
 				'precioBebida'=>doubleval($request->getVar('inputPrice')),
 				'updated_at'=>date('Y-m-d H:i:s'),
-				'deleted_at'=>intval($request->getVar('stateDrink')),
+				'deleted_at'=>$varDeleted,
 			);
 			
 			$beverageModel= model('BeverageModel');
@@ -122,7 +123,9 @@ class Bebida extends BaseController{
     {
         $validation =  \Config\Services::validation();
 		$request= \Config\Services::request();
-        $faker = Factory::create();
+        $faker = \Faker\Factory::create();
+
+		// dd($faker->unique()->uuid);
 		$validation->setRules([
 			'inputNameDrink' => 'required|min_length[1]',
 		  	'typeDrink'=>'required|in_list[1,2,3,4]',
@@ -155,11 +158,11 @@ class Bebida extends BaseController{
 			$data=array(
 				'idBebida'=>$faker->unique()->uuid,
 				'nombreBebida'=>strtoupper($request->getVar('inputNameDrink')),
-				'tipoBebida'=>intval($request->getVar('typeDrink')),
+				'idCategoriaBebida'=>intval($request->getVar('typeDrink')),
 				'precioBebida'=>doubleval($request->getVar('inputPrice')),
 				'created_at'=>date('Y-m-d H:i:s'),
 				'updated_at'=>date('Y-m-d H:i:s'),
-				'deleted_at'=>intval($request->getVar('stateDrink')),
+				'deleted_at'=>($request->getVar('stateDrink')=="0") ? null : date('Y-m-d H:i:s'),
 			);
 			
 			$beverageModel= model('BeverageModel');

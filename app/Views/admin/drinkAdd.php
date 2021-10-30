@@ -28,7 +28,7 @@
                             </div>
                         <?php endif;?>
                         <h4><strong>Agregar bebida</strong></h4>
-                        <form action="<?=route_to('agregarBebida')?>" method="post">
+                        <form action="<?=base_url('menu/bebida/agregarBebida')?>" method="post">
                             <div class="mb-3">
                                 <label class="form-label" for="inputNameDrink">Ingrese nombre de bebida</label>
                                 <input type="text" class="form-control" id="inputNameDrink" name="inputNameDrink" placeholder="Nombres" value="<?=old('inputNameDrink')?>">
