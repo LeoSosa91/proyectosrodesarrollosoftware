@@ -104,7 +104,7 @@ class Chef extends BaseController{
 		$userModel= model('UserModel');
 
 		$data=array(
-			'id_user'=>$request->getVar('idUser'),
+			'id_user'=>$request->getVar('idUserPass'),
 			'password'=>$request->getVar('inputPasswordNew')
 		);
 		$validation->setRules([
@@ -148,10 +148,9 @@ class Chef extends BaseController{
 	}
 	public function foodEdit()
 	{
-		$foodModel= model('FoodModel');
-		$platos=$foodModel->orderBy('tipoPlato', 'asc')->findAll();
+		$db      = \Config\Database::connect();
 		$data['title']='Editar platos';
-		$data['foods']=$platos;
+		$data['foods']=$db->query('SELECT * FROM `listado_platos`')->getResultArray();
 		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Chef/foodEdit',$data);
 	}
 	public function report()

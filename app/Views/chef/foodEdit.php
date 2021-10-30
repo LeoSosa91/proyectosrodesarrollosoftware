@@ -25,7 +25,7 @@
                     <?php endif;?>
                     <div class="card-body">
                         <h4><strong>Editar plato</strong></h4>
-                        <form action="<?=route_to('modificarPlato')?>" method="post">
+                        <form action="<?=base_url(route_to('modificarPlato')) ?>" method="post">
                             <input type="hidden" name="idPlato" id="idPlato">
                             <div class="mb-3">
                                 <label class="form-label" for="inputNameFood">Ingrese nombre de plato</label>
@@ -94,8 +94,8 @@
                                 foreach ($foods as $food) {
                                     echo'<tr>
                                             <td>'.$food['nombrePlato'].'</td>
-                                            <td>'.$food['tipoPlato'].'</td>';
-                                    echo (0 == $food['deleted_at']) ? '<td>Habilitado</td>' : '<td>Deshabilitado</td>';
+                                            <td>'.$food['nombreCategoriaPlato'].'</td>';
+                                    echo (null == $food['deleted_at']) ? '<td>Habilitado</td>' : '<td>Deshabilitado</td>';
                                     echo'<td>'.$food['descripcionPlato'].'</td>
                                             <td>$ '.$food['precioPlato'].'</td>
                                             <td>
@@ -121,7 +121,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Ayuda</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

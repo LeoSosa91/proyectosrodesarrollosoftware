@@ -106,13 +106,12 @@ class Plato extends BaseController{
 			return  redirect()->back()->with('errors',$validation->getErrors())->withInput();
 		}else {
 			$data=array(
-				// 'idPlato'=>$request->getVar('idPlato'),
 				'nombrePlato'=>$request->getVar('inputNameFood'),
-				'tipoPlato'=>intval($request->getVar('typeFood')),
+				'idCategoriaPlato'=>intval($request->getVar('typeFood')),
 				'descripcionPlato'=>$request->getVar('inputIngredientes'),
 				'precioPlato'=>doubleval($request->getVar('inputPrice')),
 				'updated_at'=>date('Y-m-d H:i:s'),
-				'deleted_at'=>intval($request->getVar('stateFood')),
+				'deleted_at'=>($request->getVar('stateFood')=="0") ? null : date('Y-m-d H:i:s')
 			);
 			$foodModel= model('FoodModel');
 			if (false===$foodModel->update($request->getVar('idPlato'),$data)) {

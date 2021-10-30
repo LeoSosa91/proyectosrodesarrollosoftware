@@ -58,8 +58,10 @@ $routes->group('menu', function($routes)
 	{
 		$routes->post('listarPlatos','Plato::listarPlatos',['namespace' => 'App\Controllers\Menu']);
 		$routes->post('buscarPlato', 'Plato::buscarPlato',['namespace' => 'App\Controllers\Menu']);
+		$routes->post('agregarPlato', 'Plato::agregarPlato',['namespace' => 'App\Controllers\Menu','as'=>'agregarPlato']);
+		$routes->post('modificarPlato', 'Plato::modificarPlato',['namespace' => 'App\Controllers\Menu','as'=>'modificarPlato']);
 	});
-// $routes->post('agregarPlato', 'Plato::agregarPlato',['namespace' => 'App\Controllers\Menu','as'=>'agregarPlato']);
+
 	
 	
 	
@@ -69,7 +71,7 @@ $routes->group('menu', function($routes)
 		$routes->post('agregarPromocion', 'Promocion::agregarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'agregarPromocion']);
 	});
 
-	// $routes->post('modificarPlato', 'Plato::modificarPlato',['namespace' => 'App\Controllers\Menu','as'=>'modificarPlato']);
+	
 	
 	
 	$routes->post('consultarPromocion', 'Promocion::consultarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'consultarPromocion']);
@@ -86,8 +88,8 @@ $routes->group('chef',['namespace' => 'App\Controllers\Chef', 'filter'=>'auth:Ch
 	// $routes->add('food', 'Chef::foodManager',['as'=>'foodManager']);
 	$routes->add('foodAdd', 'Chef::foodAdd',['as'=>'foodAdd']);
 	$routes->add('foodEdit', 'Chef::foodEdit',['as'=>'foodEdit']);
-	// $routes->post('guardarInfoPersonal', 'Chef::guardarInfoPersonalChef',['as'=>'guardarInfoPersonalChef']);
-	// $routes->post('guardarPassword', 'Chef::guardarPasswordChef',['as'=>'guardarPasswordChef']);
+	$routes->post('guardarInfoPersonal', 'Chef::guardarInfoPersonalChef',['as'=>'guardarInfoPersonalChef']);
+	$routes->post('guardarPassword', 'Chef::guardarPasswordChef',['as'=>'guardarPasswordChef']);
 });
 $routes->group('admin',['namespace' => 'App\Controllers\Admin', 'filter'=>'auth:Administrador'], function($routes)
 {
@@ -108,10 +110,11 @@ $routes->group('admin',['namespace' => 'App\Controllers\Admin', 'filter'=>'auth:
 	$routes->post('guardarCliente','Admin::guardarCliente');
 	$routes->post('borrarCliente','Admin::borrarCliente');
 	$routes->post('habilitarCliente','Admin::habilitarCliente');
+	$routes->post('modificarEncuesta','Admin::modificarEncuesta');
 	// $routes->add('tableEdit', 'Admin::tableEdit',['as'=>'tableEdit']);
 	$routes->add('listadoClientes', 'Admin::listadoClientes',['as'=>'listadoClientes']);
-	// $routes->post('guardarInfoPersonal', 'Admin::guardarInfoPersonal',['as'=>'guardarInfoPersonalAdmin']);
-	// $routes->post('guardarPassword', 'Admin::guardarPassword',['as'=>'guardarPasswordAdmin']);
+	$routes->post('guardarInfoPersonal', 'Admin::guardarInfoPersonal',['as'=>'guardarInfoPersonalAdmin']);
+	$routes->post('guardarPassword', 'Admin::guardarPassword',['as'=>'guardarPasswordAdmin']);
 });
 //'namespace' => 'App\Controllers\Client',
 $routes->group('clients',[ 'filter'=>'auth:Cliente'], function($routes)

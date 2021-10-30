@@ -157,6 +157,7 @@ class Admin extends BaseController{
 		$db      = \Config\Database::connect();
 		$builder = $db->table('categoriabebida');
 		$query   = $builder->get();
+        
 		$data['title']='Editar bebida';
 		$beverageModel= model('BeverageModel');
 		$beverage=$beverageModel->orderBy('idCategoriaBebida', 'asc')->findAll();
@@ -249,13 +250,13 @@ class Admin extends BaseController{
       }
   }
 
-  private function obtenerReporteReservasCanceladas($fechaInicio,$fechaFinal){
+    private function obtenerReporteReservasCanceladas($fechaInicio,$fechaFinal){
 
   /*$request= \Config\Services::request();
   $fechaInicio=$request->getPostGet('inputFechaInicioReportePlatos1');
   $fechaFinal=$request->getPostGet('inputFechaFinReportePlatos1');*/
 
-  if ($fechaInicio == "" || $fechaFinal == "") {
+    if ($fechaInicio == "" || $fechaFinal == "") {
       if ($fechaInicio == "" && $fechaFinal == "") {
           $data['title']="Reportes";
           $data['errorAlert']='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong> No se ingresó fecha desde y hasta </strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
@@ -275,63 +276,63 @@ class Admin extends BaseController{
           }
       }
 
-  }else{
+    }else{
 
-  $db = \Config\Database::connect();
+    $db = \Config\Database::connect();
 
-  $query = $db->query('select dniUsuario, turnoReserva, horario, idMesa, fechaReserva from reserva where (fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'") and (estadoReserva = "Cancelada") order by fechaReserva desc');
+    $query = $db->query('select dniUsuario, turnoReserva, horario, idMesa, fechaReserva from reserva where (fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'") and (estadoReserva = "Cancelada") order by fechaReserva desc');
 
-  $pdf = new \FPDF();
-  $pdf->AddPage();
-  $pdf->SetFont('Arial','B',16);
-  $pdf->Cell(70);
-  $pdf->Cell(40,10,"SRO",0,0,'C');
-  $pdf->Ln(15);
-  $pdf->SetFont('Arial','',15);
-  $fechaInicio2 = date("d/m/Y", strtotime($fechaInicio));
-  $pdf->Cell(47,10,"Desde: ".$fechaInicio2,0,0,'C');
-  $pdf->Ln(10);
-  $fechaFinal2 = date("d/m/Y", strtotime($fechaFinal));
-  $pdf->Cell(45,10,"Hasta: ".$fechaFinal2,0,0,'C');
-  $pdf->Ln(15);
-  $pdf->Cell(35);
-  $pdf->Cell(4,10,'Las reservas canceladas son: ',0,0,'C');
-  $pdf->Ln(15);
+    $pdf = new \FPDF();
+    $pdf->AddPage();
+    $pdf->SetFont('Arial','B',16);
+    $pdf->Cell(70);
+    $pdf->Cell(40,10,"SRO",0,0,'C');
+    $pdf->Ln(15);
+    $pdf->SetFont('Arial','',15);
+    $fechaInicio2 = date("d/m/Y", strtotime($fechaInicio));
+    $pdf->Cell(47,10,"Desde: ".$fechaInicio2,0,0,'C');
+    $pdf->Ln(10);
+    $fechaFinal2 = date("d/m/Y", strtotime($fechaFinal));
+    $pdf->Cell(45,10,"Hasta: ".$fechaFinal2,0,0,'C');
+    $pdf->Ln(15);
+    $pdf->Cell(35);
+    $pdf->Cell(4,10,'Las reservas canceladas son: ',0,0,'C');
+    $pdf->Ln(15);
 
-  $pdf->SetFont('Arial','B',14);
-  $pdf->Cell(37,7,"Dni usuario",1);
-  $pdf->Cell(25,7,"Turno",1);
-  $pdf->Cell(40,7,"Horario",1);
-  $pdf->Cell(31,7,"Num mesa",1);
-  $pdf->Cell(35,7,"fecha reserva",1);
-  $pdf->Ln();
+    $pdf->SetFont('Arial','B',14);
+    $pdf->Cell(37,7,"Dni usuario",1);
+    $pdf->Cell(25,7,"Turno",1);
+    $pdf->Cell(40,7,"Horario",1);
+    $pdf->Cell(31,7,"Num mesa",1);
+    $pdf->Cell(35,7,"fecha reserva",1);
+    $pdf->Ln();
 
-  if (count($query->getResultArray())==0) {
+    if (count($query->getResultArray())==0) {
       $data['title']="Reportes";
       $data['errorAlert']='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong> No se encontraron resultados </strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
       $estructura=view('Front/head',$data).view('Front/header').view('Front/sidebar').view('admin/report',$data);
       return $estructura;
-  } else {
+    } else {
 
-  foreach ($query->getResultArray() as $row)
-{
-      $pdf->SetFont('Arial','',13);
-      $pdf->Cell(37,7,$row['dniUsuario'],1);
-      $pdf->Cell(25,7,$row['turnoReserva'],1);
-      $pdf->Cell(40,7,$row['horario'],1);
-      $pdf->Cell(31,7,$row['idMesa'],1);
-      $fechaReserva6 = date("d/m/Y", strtotime($row['fechaReserva']));
-      $pdf->Cell(35,7,$fechaReserva6,1);
-      $pdf->Ln();
-}
-  $data = [];
-  $hoy = date("dmyhis");
-  $pdfFilePath = "ReservasCanceladas".$hoy.".pdf";
-  $this->response->setHeader('Content-Type', 'application/pdf');
-  $pdf->Output('D',$pdfFilePath,false);
-  //$pdf->Output();
-  }
-}
+        foreach ($query->getResultArray() as $row)
+        {
+            $pdf->SetFont('Arial','',13);
+            $pdf->Cell(37,7,$row['dniUsuario'],1);
+            $pdf->Cell(25,7,$row['turnoReserva'],1);
+            $pdf->Cell(40,7,$row['horario'],1);
+            $pdf->Cell(31,7,$row['idMesa'],1);
+            $fechaReserva6 = date("d/m/Y", strtotime($row['fechaReserva']));
+            $pdf->Cell(35,7,$fechaReserva6,1);
+            $pdf->Ln();
+        }
+        $data = [];
+        $hoy = date("dmyhis");
+        $pdfFilePath = "ReservasCanceladas".$hoy.".pdf";
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $pdf->Output('D',$pdfFilePath,false);
+        //$pdf->Output();
+        }
+    }
 
 }
 
@@ -395,21 +396,21 @@ public function obtenerReporteHorariosDemandados($fechaInicio,$fechaFinal){
         $pdf->Cell(30,7,"Cantidad",1);
         $pdf->Ln();
 
-    foreach ($query->getResultArray() as $row)
-{
-        $pdf->SetFont('Arial','',13);
-        $pdf->Cell(35,7,$row['horario'],1);
-        $pdf->Cell(30,7,$row['cantidad'],1);
-        $pdf->Ln();
-}
-    $data = [];
-    $hoy = date("dmyhis");
-    $pdfFilePath = "HorariosDemandados".$hoy.".pdf";
-    $this->response->setHeader('Content-Type', 'application/pdf');
-    $pdf->Output('D',$pdfFilePath,false);
-    //$pdf->Output();
+        foreach ($query->getResultArray() as $row)
+        {
+                $pdf->SetFont('Arial','',13);
+                $pdf->Cell(35,7,$row['horario'],1);
+                $pdf->Cell(30,7,$row['cantidad'],1);
+                $pdf->Ln();
+        }
+        $data = [];
+        $hoy = date("dmyhis");
+        $pdfFilePath = "HorariosDemandados".$hoy.".pdf";
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $pdf->Output('D',$pdfFilePath,false);
+        //$pdf->Output();
+        }
     }
-}
 
 }
 
@@ -478,7 +479,7 @@ public function obtenerReporteclientesNoAsistencia($fechaInicio,$fechaFinal){
         $pdf->Ln();
 
     foreach ($query->getResultArray() as $row)
-{
+    {
         $pdf->SetFont('Arial','',13);
         $pdf->Cell(30,7,$row['dniUsuario'],1);
         $pdf->Cell(28,7,$row['nombreUsuario'],1);
@@ -488,7 +489,7 @@ public function obtenerReporteclientesNoAsistencia($fechaInicio,$fechaFinal){
         $fechaInicio8 = date("d/m/Y", strtotime($row['fechaReserva']));
         $pdf->Cell(37,7,$fechaInicio8,1);
         $pdf->Ln();
-  }
+    }
     $data = [];
     $hoy = date("dmyhis");
     $pdfFilePath = "ClientesNoAsistieron".$hoy.".pdf";
@@ -622,57 +623,72 @@ public function obtenerReporteReservasDelDia($fechaInicio,$fechaFinal){
 
   }
 
-  public function imprimirReporte(){
-    $request= \Config\Services::request();
-    $fechaInicio=$request->getPostGet('FechaInicioReportePlatos');
-    $fechaFinal=$request->getPostGet('FechaHastaReportePlatos');
-    $tipoRepo=$request->getPostGet('TipoReporte');
+    public function imprimirReporte(){
+        $request= \Config\Services::request();
+        $fechaInicio=$request->getPostGet('FechaInicioReportePlatos');
+        $fechaFinal=$request->getPostGet('FechaHastaReportePlatos');
+        $tipoRepo=$request->getPostGet('TipoReporte');
 
-    switch ($tipoRepo) {
-      case '1':
-      //Ranking platos
-        $db = \Config\Database::connect();
-        $query = $db->query('select p.nombrePlato, count(p.nombrePlato) as cantidad from reserva as r inner join pedido as g inner join plato as p inner join pedidoplato as c where (r.fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'") and r.idReserva = g.idReserva and g.nroPedido = c.nroPedido and c.idPlato = p.idPlato group by p.nombrePlato order by cantidad desc,p.nombrePlato limit 5');
-        echo json_encode($query->getResultArray());
-        break;
-        case '2':
-        //reservas canceladas
-          $db = \Config\Database::connect();
-          $query = $db->query('select id_user, turnoReserva, horario, idMesa, fechaReserva from reserva where (fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'") and (estadoReserva = "Cancelada") order by fechaReserva desc');
-          echo json_encode($query->getResultArray());
-          break;
-          case '3':
-          //horarios mas demandados
+        switch ($tipoRepo) {
+        case '1':
+        //Ranking platos
             $db = \Config\Database::connect();
-            $query = $db->query('select horario, count(*) as cantidad from reserva where fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'" group by horario having count(*)>1 order by cantidad desc limit 5');
+            $query = $db->query('select p.nombrePlato, count(p.nombrePlato) as cantidad from reserva as r inner join pedido as g inner join plato as p inner join pedidoplato as c where (r.fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'") and r.idReserva = g.idReserva and g.nroPedido = c.nroPedido and c.idPlato = p.idPlato group by p.nombrePlato order by cantidad desc,p.nombrePlato limit 5');
             echo json_encode($query->getResultArray());
             break;
-            case '4':
-            //clientes no asistencia
-              $db = \Config\Database::connect();
-              $query = $db->query('select u.dniUsuario, u.nombreUsuario, u.apellidoUsuario, u.emailUsuario, u.telefono, r.fechaReserva from reserva as r inner join usuario as u where (r.fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'") and (r.asistenciaReserva = "No asistio") and r.id_user = u.id_user order by u.apellidoUsuario asc');
-              echo json_encode($query->getResultArray());
-              break;
-              case '5':
-              //reservas del dia
+            case '2':
+            //reservas canceladas
+            $db = \Config\Database::connect();
+            $query = $db->query('select id_user, turnoReserva, horario, idMesa, fechaReserva from reserva where (fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'") and (estadoReserva = "Cancelada") order by fechaReserva desc');
+            echo json_encode($query->getResultArray());
+            break;
+            case '3':
+            //horarios mas demandados
                 $db = \Config\Database::connect();
-                $query = $db->query('select dniUsuario, turnoReserva, horario, idMesa, fechaReserva, asistenciaReserva from reserva where fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'" and (estadoReserva = "En Curso") order by fechaReserva desc');
+                $query = $db->query('select horario, count(*) as cantidad from reserva where fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'" group by horario having count(*)>1 order by cantidad desc limit 5');
                 echo json_encode($query->getResultArray());
                 break;
+                case '4':
+                //clientes no asistencia
+                $db = \Config\Database::connect();
+                $query = $db->query('select u.dniUsuario, u.nombreUsuario, u.apellidoUsuario, u.emailUsuario, u.telefono, r.fechaReserva from reserva as r inner join usuario as u where (r.fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'") and (r.asistenciaReserva = "No asistio") and r.id_user = u.id_user order by u.apellidoUsuario asc');
+                echo json_encode($query->getResultArray());
+                break;
+                case '5':
+                //reservas del dia
+                    $db = \Config\Database::connect();
+                    $query = $db->query('select dniUsuario, turnoReserva, horario, idMesa, fechaReserva, asistenciaReserva from reserva where fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'" and (estadoReserva = "En Curso") order by fechaReserva desc');
+                    echo json_encode($query->getResultArray());
+                    break;
+        }
     }
-  }
 	public function encuesta()
 	{
+        $db = \Config\Database::connect();
 		$data['title']="Encuesta";
-		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Admin/encuesta').view('Admin/footer');
-	}
+        $data['listadoPreguntaEncuesta']=$db->table('encuestapreg')->get()->getResultArray();
+		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Admin/encuesta',$data);
+    }
+    public function modificarEncuesta(){
+        $db = \Config\Database::connect();
+        $request= \Config\Services::request();
+        $data=array(
+            'idPregunta'=>$request->getPostGet('preguntaAnterior'),
+            'preguntaEncuesta'=>$request->getPostGet('preguntaNueva'),
+        );
+        $query=$db->table('encuestapreg')->where('idPregunta',$request->getPostGet('preguntaAnterior'))->update($data);
+        if ($query===false) {
+            return  redirect()->route('encuesta')->with('msg',['type'=> 'danger', 'body'=>'No se ha podido actualizar. Intentelo más tarde.']);
+        }else{
+            return  redirect()->route('encuesta')->with('msg',['type'=> 'success', 'body'=>'Se ha actualizado con exito']);
+        }
+    }
 	public function listadoClientes()
 	{
 		$db = \Config\Database::connect();
         $data['title']="Clientes";
         $data['listadoClientes']=$db->table('user')->getWhere(['id_group'=>3])->getResultArray();
-        //.view('Admin/footer')
-		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Admin/listadoClients',$data);
+    	return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Admin/listadoClients',$data);
 	}
     public function verificarPenalidades(){
         $db = \Config\Database::connect();

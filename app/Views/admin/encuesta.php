@@ -24,19 +24,28 @@
                             <h4>MODIFICAR ENCUESTA</h4>
                         </div>
                         <div class="card-body">
-                            <form action="" method="post" novalidate>
+                            <?php if(session('msg')):?>
+                                <div class="alert alert-<?=session('msg.type')?> alert-dismissible fade show" role="alert">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                                    <div><strong><?=session('msg.body')?></strong></div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            <?php endif;?>
+                            <form action="<?=base_url('admin/modificarEncuesta')?>" method="post" novalidate>
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                    <option selected>---</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <select class="form-select" id="preguntaAnterior" name="preguntaAnterior" aria-label="Floating label select example">
+                                    <option value="0" selected>---</option>
+                                    <?php
+                                        foreach ($listadoPreguntaEncuesta as $preg) {
+                                            echo'<option value="'.$preg['idPregunta'].'">'.$preg['preguntaEncuesta'].'</option>';
+                                        }
+                                    ?>
                                 </select>
-                                <label for="floatingSelect">Pregunta</label>
+                                <label for="preguntaAnterior">Pregunta</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
-                                <label for="floatingSelect">Nueva pregunta</label>
+                                <input type="text" class="form-control" id="preguntaNueva" name="preguntaNueva" placeholder="">
+                                <label for="preguntaNueva">Nueva pregunta</label>
                             </div>
                             <input type="submit" value="Modificar" class="btn btn-dark">
                             </form>
@@ -61,3 +70,5 @@
     </div>
   </div>
 </div>
+<?=$this->include('front/footer');?>
+<?=$this->include('admin/jsAdmin');?>

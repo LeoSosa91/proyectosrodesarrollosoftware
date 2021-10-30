@@ -147,7 +147,7 @@
 											<h5 class="card-title">Password</h5>
 
 											<form action="<?=base_url(route_to('guardarPasswordAdmin'))?>" method="post" class="p-4">
-                        <input type="hidden" name="idUser" id="idUser" value="<?=$user['id_user'];?>">
+                        <input type="hidden" name="idUserPass" id="idUserPass" value="<?=$user['id_user'];?>">
                         <div class="mb-3">
 													<label class="form-label" for="inputPasswordNew">Nueva Contrase&ntilde;a</label>
 													<input type="password" class="form-control" id="inputPasswordNew" name="inputPasswordNew">
