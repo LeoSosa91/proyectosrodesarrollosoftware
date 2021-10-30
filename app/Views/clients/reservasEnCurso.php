@@ -25,9 +25,9 @@
                 <table id="tablaReservasEnCurso" class="table table-striped" style="width:100%; height:100%">
                     <thead>
                         <tr>
-                            <th>Turno</th>
                             <th>Fecha</th>
                             <th>Hora</th>
+                            <th>Turno</th>
                             <th>Total a Pagar</th>
                             <th>Estado</th>
                             <th>Gestionar</th>
@@ -39,9 +39,9 @@
                         if (sizeof($reservasEnCurso)>0) {
                             foreach ($reservasEnCurso as $reserva) {
                                 echo '<tr role="row" >';
-                                echo '<td scope="row" class="reserva" id="'.$reserva['idReserva'].'">'.$reserva['turnoReserva'].'</td>';
                                 echo'<td class="fecha" fecha="'.$reserva['fechaReserva'].'">'.date_format(date_create($reserva['fechaReserva']), 'd/m/Y').'</td>';
                                 echo'<td class="hora" hora="'.$reserva['horario'].'">'.$reserva['horario'].'</td>';
+                                echo '<td scope="row" class="reserva" id="'.$reserva['idReserva'].'">'.$reserva['turnoReserva'].'</td>';
                                 echo'<td>$'.$reserva['precioTotalReserva'].'</td>';
                                 $fecha_entrada = new DateTime($reserva['fechaReserva']." ".$reserva['horario'].":00");        
                                 $diff = $fecha_entrada->diff($fecha_actual);        
@@ -249,7 +249,8 @@
     $(document).ready(function() {
     $('#tablaReservasEnCurso').DataTable( {
         "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+            "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
+            "paging": true
         }
     } );
 } );

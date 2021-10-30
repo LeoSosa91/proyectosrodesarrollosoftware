@@ -31,8 +31,6 @@ $(".btnModificarCliente").click(function () {
         data: {id: id},
         dataType: 'json',
         success: function (res) {
-            console.log(res.status);  
-            console.log(res.data);
             $("#dniUsuario").val(res.data.dniUsuario);
             $("#apellidoUsuario").val(res.data.usersurname);
             $("#nombreUsuario").val(res.data.username);
@@ -45,6 +43,7 @@ $(".btnModificarCliente").click(function () {
         } 
       })
 })
+
 $(".btnDeshabilitarCliente").click(function () {
     id=$(this).parents("tr").find(".cliente").attr("data-id");
     $("#idUserDelete").val(id);

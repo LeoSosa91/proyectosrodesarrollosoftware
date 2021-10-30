@@ -132,42 +132,42 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="<?=base_url('/admin/guardarCliente')?>" method="post">
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
-            <input type="text" id="dniUsuario" name="dniUsuario" class="form-control" placeholder="DNI" aria-label="DNI" aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
-            <input type="text" id="apellidoUsuario" name="apellidoUsuario" class="form-control" placeholder="Apellido" aria-label="Apellido" aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
-            <input type="text" id="nombreUsuario" name="nombreUsuario" class="form-control" placeholder="Nombre" aria-label="Nombre" aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
-            <input type="date" id="fechaNacUsuario" name="fechaNacUsuario" class="form-control" placeholder="Fecha de nacimiento" aria-label="Fecha de nacimiento" aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
-            <input type="email" id="correoUsuario" name="correoUsuario" class="form-control" placeholder="Correo electronico" aria-label="Correo electronico" aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
-            <input type="text" id="direccionUsuario" name="direccionUsuario" class="form-control" placeholder="Direccion" aria-label="Direccion" aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
-            <input type="tel" id="telefonoUsuario" name="telefonoUsuario" class="form-control" placeholder="Telefono/Celular" aria-label="Telefono/Celular" aria-describedby="basic-addon1">
-          </div>
-          <input type="hidden" name="idUser" id="idUser">
-          <input type="submit" name="btnGuardarCambios" class="btn btn-success"value="Guardar">
-        </form>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+      <form class="row g-3 needs-validation" novalidate id="formModificarCliente">
+        <div class="input-group mb-3 has-validation" id="contenedorDniUsuario">
+          <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
+          <input type="text" id="dniUsuario" name="dniUsuario" class="form-control" placeholder="DNI" aria-label="DNI" aria-describedby="basic-addon1" value="<?= old('dniUsuario') ?>" required>
+        </div>
+        <div class="input-group mb-3 has-validation" id="contenedorApellidoUsuario">
+          <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
+          <input type="text" id="apellidoUsuario" name="apellidoUsuario" class="form-control" placeholder="Apellido" aria-label="Apellido" aria-describedby="basic-addon1" value="<?= old('apellidoUsuario') ?>" required>
+        </div>
+        <div class="input-group mb-3 has-validation" id="contenedorNombreUsuario">
+          <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
+          <input type="text" id="nombreUsuario" name="nombreUsuario" class="form-control" placeholder="Nombre" aria-label="Nombre" aria-describedby="basic-addon1" value="<?= old('nombreUsuario') ?>" required>
+        </div>
+        <div class="input-group mb-3 has-validation" id="contenedorFechaNacUsuario">
+          <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
+          <input type="date" id="fechaNacUsuario" name="fechaNacUsuario" class="form-control" placeholder="Fecha de nacimiento" aria-label="Fecha de nacimiento" aria-describedby="basic-addon1" value="<?= old('fechaNacUsuario') ?>" required>
+        </div>
+        <div class="input-group mb-3 has-validation" id="contenedorCorreoUsuario">
+          <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
+          <input type="email" id="correoUsuario" name="correoUsuario" class="form-control" placeholder="Correo electronico" aria-label="Correo electronico" aria-describedby="basic-addon1" value="<?= old('correoUsuario') ?>" required>
+        </div>
+        <div class="input-group mb-3 has-validation" id="contenedorDireccionUsuario">
+          <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
+          <input type="text" id="direccionUsuario" name="direccionUsuario" class="form-control" placeholder="Direccion" aria-label="Direccion" aria-describedby="basic-addon1" value="<?= old('direccionUsuario') ?>" required>
+        </div>
+        <div class="input-group mb-3 has-validation" id="contenedorTelefonoUsuario">
+          <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock prefix"></i></span>
+          <input type="tel" id="telefonoUsuario" name="telefonoUsuario" class="form-control" placeholder="Telefono/Celular" aria-label="Telefono/Celular" aria-describedby="basic-addon1" value="<?= old('telefonoUsuario') ?>" pattern="[0-9]{4}[0-9]{3}[0-9]{3}" required>
+        </div>
+        <input type="hidden" name="idUser" id="idUser">
+        <div class="col-12">
+          <button class="btn btn-success" type="button" id="btnModificarCliente">Modificar</button>
+        </div>
+      </form>
+        <!-- action="<?=base_url('/admin/guardarCliente')?>" -->
+     
       </div>
     </div>
   </div>
@@ -217,6 +217,7 @@
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
 <script type="text/javascript" src="<?=base_url();?>/assets/js/gestionCliente.js"></script>
+<script type="text/javascript" src="<?=base_url();?>/assets/js/validarFormEditarCliente.js"></script>
 <script>
     var baseURL= "<?= base_url();?>";
     $(document).ready(function() {
@@ -225,6 +226,7 @@
             "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
         },
         "scrollY":        "400px",
+        "scrollX": true,
         "scrollCollapse": true,
         "paging":         true
       });

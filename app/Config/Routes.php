@@ -95,6 +95,7 @@ $routes->group('admin',['namespace' => 'App\Controllers\Admin', 'filter'=>'auth:
 	$routes->post('imprimirReporte','Admin::imprimirReporte');
 	$routes->post('verificarPenalidades','Admin::verificarPenalidades');
 	$routes->post('cargarDatosCliente','Admin::cargarDatosCliente');
+	$routes->post('validarModificarCliente','Admin::validarModificarCliente');
 	$routes->post('guardarCliente','Admin::guardarCliente');
 	$routes->post('borrarCliente','Admin::borrarCliente');
 	$routes->post('habilitarCliente','Admin::habilitarCliente');

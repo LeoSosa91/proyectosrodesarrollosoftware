@@ -705,8 +705,7 @@ public function obtenerReporteReservasDelDia($fechaInicio,$fechaFinal){
             'deleted_at'=>null
         ];
         $UserModel->update($id, $data);
-        // $UserModel->save(['id_user'=>$id,'id_group'=>3,'updated_at'=>null]);
-        // dd($id);
+        
         return  redirect()->route('listadoClientes')->with('msg',['type'=> 'success', 'body'=>'Se pudo habilitar con exito al cliente.']);;
     }
     public function borrarCliente(){
@@ -729,11 +728,69 @@ public function obtenerReporteReservasDelDia($fechaInicio,$fechaFinal){
         }
         
     }
+
+    public function validarModificarCliente(){
+        $validation =  \Config\Services::validation();
+        $validation->setRules([
+            'dniUsuario' => 'required|min_length[7]|max_length[8]',
+            'nombreUsuario' => 'required|min_length[3]|max_length[50]',
+            'apellidoUsuario' => 'required|min_length[3]|max_length[50]',
+            'correoUsuario' => 'required|valid_email',
+            'fechaNacUsuario' => 'required|valid_date',
+            'direccionUsuario' => 'required|min_length[10]',
+            'telefonoUsuario' => 'required|min_length[3]|numeric'
+            //|alpha_numeric_punct
+        ],
+        [   // Errors
+            'dniUsuario' => [
+                'required' => 'Se debe ingresar un nro de DNI',
+                'min_length' => 'Su DNI es incorrecto, es muy corto. Ingrese nuevamente',
+                'max_length' => 'Su DNI es incorrecto, es muy largo. Ingrese nuevamente',
+            ],
+            'nombreUsuario' => [
+                'required' => 'Se debe ingresar un nombre',
+                'min_length' => 'Su nombre es incorrecto, es muy corto. Ingrese nuevamente',
+                'max_length' => 'Su nombre es incorrecto, es muy largo. Ingrese nuevamente',
+            ],
+            'apellidoUsuario' => [
+                'required' => 'Se debe ingresar un apellido',
+                'min_length' => 'Su apellido es incorrecto, es muy corto. Ingrese nuevamente',
+                'max_length' => 'Su apellido es incorrecto, es muy largo. Ingrese nuevamente',
+            ],
+            'fechaNacUsuario' => [
+                'required' => 'Se debe ingresar una fecha de nacimiento',
+                'valid_date' => 'Se debe ingresar una fecha de nacimiento valida. Ingrese nuevamente',
+                
+            ],
+            'correoUsuario' => [
+                'required' => 'Se debe ingresar un email',
+                'valid_email' => 'Se debe ingresar un email valido. Por favor intentelo nuevamente',
+            ],
+            'direccionUsuario' => [
+                'required' => 'Se debe ingresar un direccion',
+                'min_length' => 'Su direccion es incorrecto, es muy corto. Ingrese nuevamente',
+                //'alpha_numeric_punct' => 'Debe contener solo caracteres alfanumericos, espacios y algunos caracteres especiales',
+            ],
+            'telefonoUsuario' => [
+                'required' => 'Se debe ingresar un telefono',
+                'min_length' => 'Su telefono es incorrecto, es muy corto. Ingrese nuevamente',
+                'numeric' => 'Debe contener solo caracteres numericos',
+            ],
+        ]
+        );
+        if (!$validation->withRequest($this->request)->run()) {
+            echo json_encode(array("status" => false , 'data' => $validation->getErrors()));
+            //dd($validation->getErrors());
+			//return  redirect()->back()->with('errors',$validation->getErrors())->withInput();
+		}else{
+            echo json_encode(array("status" => true, 'data' => []));
+        }
+    }
     public function guardarCliente(){
         
         $db = \Config\Database::connect();
         $request= \Config\Services::request();
-        $errorAlert="";
+        
         $user=array(
             'dniUsuario'=>$request->getPostGet('dniUsuario'),
             'username'=>$request->getPostGet('nombreUsuario'),
@@ -748,34 +805,11 @@ public function obtenerReporteReservasDelDia($fechaInicio,$fechaFinal){
         ];
         $query=$db->table('user')->where($data)->update($user);
         if ($query===false) {
-            echo('mal');
+            return  redirect()->route('listadoClientes')->with('msg',['type'=> 'danger', 'body'=>'No se ha podido actualizar al cliente. Intentelo más tarde.']);
         }else{
-            echo('bien');
+            return  redirect()->route('listadoClientes')->with('msg',['type'=> 'success', 'body'=>'Se ha actualizado con exito al cliente']);
         }
-        // ->where('id_user', $request->getPostGet('idUser'))
-        // ->set($data)
-        // ->update();
-        return  redirect()->route('listadoClientes');
-        // if($request->getPostGet('dniUsuario')){
-        //     $data['dniUsuario']=$request->getPostGet('dniUsuario');
-        // }
         
-        // if($UserModel->save($data)===false){
-        //     $errorAlert='<div class="alert alert-danger alert-dismissible fade show" role="alert"><ul>';
-        //     foreach ($UserModel->errors() as $error) {
-        //         $errorAlert.='<li><strong>'. esc($error).'</strong></li>';
-        //     }
-        //     $errorAlert.='</ul><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
-        // }else{
-        //     $errorAlert='<div class="alert alert-success alert-dismissible fade show" role="alert"><strong> Se subio/actualizado a la base de datos el cliente con exito</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
-        // }
-
-        // $users = $UserModel->findAll();
-        // $data['users']=$users;
-        // $data['title']="Listado de clientes";
-        // $data['errorAlert']=$errorAlert;
-        // $estructura=view('head',$data).view('nav/nav_admin').view('content/admin/content_admin_client',$data).view('footer').view('scripts');
-        // return $estructura;
     }
 
 
