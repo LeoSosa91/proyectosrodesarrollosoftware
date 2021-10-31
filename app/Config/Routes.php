@@ -148,8 +148,8 @@ $routes->group('clients',[ 'filter'=>'auth:Cliente'], function($routes)
 		$routes->post('modificarPedidoPlatoBebidaCliente','Client::modificarPedidoPlatoBebidaCliente',['as'=>'modificarPedidoPlatoBebidaCliente','namespace' => 'App\Controllers\Client']);
 	});
 
-	// $routes->post('guardarInfoPersonal', 'Client::guardarInfoPersonal',['as'=>'guardarInfoPersonal']);
-	// $routes->post('guardarPassword', 'Client::guardarPassword',['as'=>'guardarPassword']);
+	$routes->post('guardarInfoPersonal', 'Client::guardarInfoPersonal',['as'=>'guardarInfoPersonal']);
+	$routes->post('guardarPassword', 'Client::guardarPassword',['as'=>'guardarPassword']);
 
 	$routes->add('encuesta', 'Client::completarEncuesta',['as'=>'completarEncuesta','namespace' => 'App\Controllers\Client']);
 	$routes->add('enviarEncuesta', 'Client::enviarEncuesta',['as'=>'enviarEncuesta','namespace' => 'App\Controllers\Client']);
