@@ -76,6 +76,11 @@ $routes->group('menu', function($routes)
 	
 	$routes->post('consultarPromocion', 'Promocion::consultarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'consultarPromocion']);
 });
+$routes->group('auth',['namespace' => 'App\Controllers\Auth',], function($routes){
+	$routes->add('register', 'Signup::index');
+	$routes->post('store', 'Signup::store');
+
+});
 
 $routes->group('chef',['namespace' => 'App\Controllers\Chef', 'filter'=>'auth:Chef'], function($routes)
 {
