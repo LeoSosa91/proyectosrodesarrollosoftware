@@ -56,15 +56,15 @@ class Email extends BaseConfig
      * @var string
      */
     // Ingresa email de envio
-    public $SMTPUser;
-
+    public $SMTPUser='sistemasrocr@gmail.com';
+    
     /**
      * SMTP Password
      *
      * @var string
      */
     // Ingresa password de email de envio
-    public $SMTPPass;
+    public $SMTPPass='desarrollo2021';
 
     /**
      * SMTP Port
