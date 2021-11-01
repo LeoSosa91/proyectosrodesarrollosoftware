@@ -8,6 +8,7 @@ $(document).ready(function(){
     const fragment = document.createDocumentFragment()
     let carrito = {}
     let listado = {}
+    let cantPers="";
     // Variable menu es cada tabla en donde se muestra cada plato o bebida ingresado
     // Variabla footerPedido es el pie de cada variable menu
     var menu 
@@ -434,7 +435,7 @@ $(document).ready(function(){
     /// Botones para reservar
     $("#btnConsultar").click(function() {
 
-        var cantPers = document.getElementById('selectCantPers').value;
+        cantPers = document.getElementById('selectCantPers').value;
         var fecha = $('#inputFecha').val();
         var hora = $("#idHora option:selected").val();
         
@@ -465,25 +466,9 @@ $(document).ready(function(){
              }
         })
     })
-    $("#btnReservar").click(function() {
-        var alergias = document.querySelectorAll(".inputAlergia");
-        var indice = 0
-        var totalAPagar = 0 //acumulara el importe a pagar sin aplicar el descuento/promocion
-  
-        Object.values(listado).forEach(menu => {
-          menu.alergia = alergias[indice].value
-          for (var i = 0; i < menu.platos.length; i++) {
-            totalAPagar = totalAPagar+(menu.platos[i].precioPlato * menu.platos[i].cantidad)
-          }
-          for (var j = 0; j < menu.bebidas.length; j++) {
-            totalAPagar = totalAPagar+(menu.bebidas[j].precioBebida * menu.bebidas[j].cantidad)
-          }
-          indice++
-        })
-        console.log(totalAPagar)
-        console.log(listado)
+    const agregarDatosAReserva =(totalAPagar,listado)=>{
         $.ajax({
-            url:baseURL+'/menu/consultarPromocion',
+            url:baseURL+'/menu/promocion/consultarPromocion',
             method: 'post',
             data: {idUser: document.getElementById('idUser').value},
             dataType: 'json',
@@ -512,13 +497,43 @@ $(document).ready(function(){
                     document.getElementById('idPTotalAPagar').innerText=totalAPagar
                     
                 }
-                //var myModal = new bootstrap.Modal(document.getElementById("reservaModal"), {});
-                // var myModal = document.getElementById('reservaModal')
-                //myModal.show()
-                // var modalToggle = document.getElementById('toggleMyModal') // relatedTarget
-                // myModal.show(modalToggle)
             }
         })
+        $("#reservaModal").modal("show");
+    }
+    $("#btnReservar").click(function() {
+        var alergias = document.querySelectorAll(".inputAlergia");
+        var indice = 0
+        var totalAPagar = 0 //acumulara el importe a pagar sin aplicar el descuento/promocion
+        var flagPlatos=true;
+        var flagBebida=true;
+        Object.values(listado).forEach(menu => {
+          menu.alergia = alergias[indice].value
+          if (menu.platos.length==0) {
+              flagPlatos=false;
+          } else {
+            for (var i = 0; i < menu.platos.length; i++) {
+                totalAPagar = totalAPagar+(menu.platos[i].precioPlato * menu.platos[i].cantidad)
+              }    
+          }
+          if (menu.bebidas.length==0) {
+            flagBebida=false;
+          } else {
+            for (var j = 0; j < menu.bebidas.length; j++) {
+                totalAPagar = totalAPagar+(menu.bebidas[j].precioBebida * menu.bebidas[j].cantidad)
+              }    
+          }
+          
+          indice++
+        })
+        
+        if (Object.values(listado).length<parseInt(cantPers,10)||flagBebida==false||flagPlatos==false) {
+            $("#errorModal").modal("show");
+            return false;
+            
+        }
+        
+        agregarDatosAReserva(totalAPagar,listado)
 
     })
 

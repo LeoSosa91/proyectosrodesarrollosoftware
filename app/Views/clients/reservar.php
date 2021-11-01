@@ -67,8 +67,8 @@
                            
                                 <input type="button" name="previous" class="previous btn btn-default" value="Previo" />
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" id="btnReservar" data-bs-toggle="modal" data-bs-target="#reservaModal">Reservar</button>
-                                
+                                <button type="button" class="btn btn-primary" id="btnReservar" >Reservar</button>
+                                <!-- data-bs-toggle="modal" data-bs-target="#reservaModal" -->
                             </fieldset>
                         </form>
                     </div>
@@ -163,7 +163,25 @@
   </div>
 </div>
 
-
+<!-- errorModal -->
+<div class="modal fade" id="errorModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger bg-gradient">
+        <p class="display-6 text-white">ERROR</p>
+        <!-- <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5> -->
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+      <div class="modal-body">
+        <p class="text-danger">Se encontró al menos un pedido sin completar. Por favor que recuerde los pedidos deben tener al menos una bebida y un plato.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Entendido</button>
+        <!-- <button type="button" class="btn btn-primary">Understood</button> -->
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <!-- Modal -->

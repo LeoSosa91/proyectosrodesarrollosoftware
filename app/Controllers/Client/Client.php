@@ -56,7 +56,8 @@ class Client extends BaseController
 			'idMesa'=>intval($request->getPostGet('idMesaRes')),
 			'horario'=>$request->getPostGet('horario'),
 			'dniUsuario'=>intval($user->getuserDni()),
-			'idEncuesta'=>null ,
+			'id_user'  => session()->get('id_user'),
+			'idEncuesta'=>null,
 			'idPromocion'=>intval($request->getPostGet('idprom')),
 		);
 		$array = json_decode($request->getPostGet('pedidos'),True);

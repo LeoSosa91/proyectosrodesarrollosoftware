@@ -69,12 +69,13 @@ $routes->group('menu', function($routes)
 		$routes->post('buscarPromocion', 'Promocion::buscarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'buscarPromocion']);
 		$routes->post('editarPromocion', 'Promocion::editarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'editarPromocion']);
 		$routes->post('agregarPromocion', 'Promocion::agregarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'agregarPromocion']);
+		$routes->post('consultarPromocion', 'Promocion::consultarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'consultarPromocion']);
 	});
 
 	
 	
 	
-	$routes->post('consultarPromocion', 'Promocion::consultarPromocion',['namespace' => 'App\Controllers\Menu','as'=>'consultarPromocion']);
+	
 });
 $routes->group('auth',['namespace' => 'App\Controllers\Auth',], function($routes){
 	$routes->add('register', 'Signup::index');

@@ -33,7 +33,8 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $protocol = 'mail';
+    //public $protocol = 'mail';
+    public $protocol = 'smtp';
 
     /**
      * The server path to Sendmail.
@@ -47,13 +48,14 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPHost;
-
+    //public $SMTPHost;
+    public $SMTPHost='smtp.gmail.com';
     /**
      * SMTP Username
      *
      * @var string
      */
+    // Ingresa email de envio
     public $SMTPUser;
 
     /**
@@ -61,6 +63,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
+    // Ingresa password de email de envio
     public $SMTPPass;
 
     /**
@@ -68,8 +71,8 @@ class Email extends BaseConfig
      *
      * @var int
      */
-    public $SMTPPort = 25;
-
+    //public $SMTPPort = 25;
+    public $SMTPPort = 465;
     /**
      * SMTP Timeout (in seconds)
      *
@@ -89,8 +92,8 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPCrypto = 'tls';
-
+    //public $SMTPCrypto = 'tls';
+    public $SMTPCrypto = 'ssl';
     /**
      * Enable word-wrap
      *
