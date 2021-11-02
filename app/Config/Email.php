@@ -6,168 +6,168 @@ use CodeIgniter\Config\BaseConfig;
 
 class Email extends BaseConfig
 {
-    /**
-     * @var string
-     */
-    public $fromEmail;
+ 	/**
+	 * @var string
+	 */
+	public $fromEmail;
 
-    /**
-     * @var string
-     */
-    public $fromName;
+	/**
+	 * @var string
+	 */
+	public $fromName;
 
-    /**
-     * @var string
-     */
-    public $recipients;
+	/**
+	 * @var string
+	 */
+	public $recipients;
 
-    /**
-     * The "user agent"
-     *
-     * @var string
-     */
-    public $userAgent = 'CodeIgniter';
+	/**
+	 * The "user agent"
+	 *
+	 * @var string
+	 */
+	public $userAgent = 'CodeIgniter';
 
-    /**
-     * The mail sending protocol: mail, sendmail, smtp
-     *
-     * @var string
-     */
-    //public $protocol = 'mail';
-    public $protocol = 'smtp';
+	/**
+	 * The mail sending protocol: mail, sendmail, smtp
+	 *
+	 * @var string
+	 */
+	// public $protocol = 'mail';
+	public $protocol = 'smtp';
+	/**
+	 * The server path to Sendmail.
+	 *
+	 * @var string
+	 */
+	public $mailPath = '/usr/sbin/sendmail';
 
-    /**
-     * The server path to Sendmail.
-     *
-     * @var string
-     */
-    public $mailPath = '/usr/sbin/sendmail';
+	/**
+	 * SMTP Server Address
+	 *
+	 * @var string
+	 */
+	// public $SMTPHost;
+	public $SMTPHost='smtp.gmail.com';
+	/**
+	 * SMTP Username
+	 *
+	 * @var string
+	 */
+	// public $SMTPUser;
+	// Ingresa tu email
+	public $SMTPUser='sistemasrocr@gmail.com';
+	
+	/**
+	 * SMTP Password
+	 *
+	 * @var string
+	 */
+	// public $SMTPPass;
+	// Ingresa la contraseña de tu email
+	public $SMTPPass='desarrollo2021';
+	/**
+	 * SMTP Port
+	 *
+	 * @var integer
+	 */
+	// public $SMTPPort = 25;
+	public $SMTPPort = 465;
+	/**
+	 * SMTP Timeout (in seconds)
+	 *
+	 * @var integer
+	 */
+	public $SMTPTimeout = 5;
 
-    /**
-     * SMTP Server Address
-     *
-     * @var string
-     */
-    //public $SMTPHost;
-    public $SMTPHost='smtp.gmail.com';
-    /**
-     * SMTP Username
-     *
-     * @var string
-     */
-    // Ingresa email de envio
-    public $SMTPUser='sistemasrocr@gmail.com';
-    
-    /**
-     * SMTP Password
-     *
-     * @var string
-     */
-    // Ingresa password de email de envio
-    public $SMTPPass='desarrollo2021';
+	/**
+	 * Enable persistent SMTP connections
+	 *
+	 * @var boolean
+	 */
+	public $SMTPKeepAlive = false;
 
-    /**
-     * SMTP Port
-     *
-     * @var int
-     */
-    //public $SMTPPort = 25;
-    public $SMTPPort = 465;
-    /**
-     * SMTP Timeout (in seconds)
-     *
-     * @var int
-     */
-    public $SMTPTimeout = 5;
+	/**
+	 * SMTP Encryption. Either tls or ssl
+	 *
+	 * @var string
+	 */
+	// public $SMTPCrypto = 'tls';
+	public $SMTPCrypto = 'ssl';
+	/**
+	 * Enable word-wrap
+	 *
+	 * @var boolean
+	 */
+	public $wordWrap = true;
 
-    /**
-     * Enable persistent SMTP connections
-     *
-     * @var bool
-     */
-    public $SMTPKeepAlive = false;
+	/**
+	 * Character count to wrap at
+	 *
+	 * @var integer
+	 */
+	public $wrapChars = 76;
 
-    /**
-     * SMTP Encryption. Either tls or ssl
-     *
-     * @var string
-     */
-    //public $SMTPCrypto = 'tls';
-    public $SMTPCrypto = 'ssl';
-    /**
-     * Enable word-wrap
-     *
-     * @var bool
-     */
-    public $wordWrap = true;
+	/**
+	 * Type of mail, either 'text' or 'html'
+	 *
+	 * @var string
+	 */
+	public $mailType = 'html';
 
-    /**
-     * Character count to wrap at
-     *
-     * @var int
-     */
-    public $wrapChars = 76;
+	/**
+	 * Character set (utf-8, iso-8859-1, etc.)
+	 *
+	 * @var string
+	 */
+	public $charset = 'UTF-8';
 
-    /**
-     * Type of mail, either 'text' or 'html'
-     *
-     * @var string
-     */
-    public $mailType = 'text';
+	/**
+	 * Whether to validate the email address
+	 *
+	 * @var boolean
+	 */
+	public $validate = false;
 
-    /**
-     * Character set (utf-8, iso-8859-1, etc.)
-     *
-     * @var string
-     */
-    public $charset = 'UTF-8';
+	/**
+	 * Email Priority. 1 = highest. 5 = lowest. 3 = normal
+	 *
+	 * @var integer
+	 */
+	public $priority = 3;
 
-    /**
-     * Whether to validate the email address
-     *
-     * @var bool
-     */
-    public $validate = false;
+	/**
+	 * Newline character. (Use “\r\n” to comply with RFC 822)
+	 *
+	 * @var string
+	 */
+	public $CRLF = "\r\n";
 
-    /**
-     * Email Priority. 1 = highest. 5 = lowest. 3 = normal
-     *
-     * @var int
-     */
-    public $priority = 3;
+	/**
+	 * Newline character. (Use “\r\n” to comply with RFC 822)
+	 *
+	 * @var string
+	 */
+	public $newline = "\r\n";
 
-    /**
-     * Newline character. (Use “\r\n” to comply with RFC 822)
-     *
-     * @var string
-     */
-    public $CRLF = "\r\n";
+	/**
+	 * Enable BCC Batch Mode.
+	 *
+	 * @var boolean
+	 */
+	public $BCCBatchMode = false;
 
-    /**
-     * Newline character. (Use “\r\n” to comply with RFC 822)
-     *
-     * @var string
-     */
-    public $newline = "\r\n";
+	/**
+	 * Number of emails in each BCC batch
+	 *
+	 * @var integer
+	 */
+	public $BCCBatchSize = 200;
 
-    /**
-     * Enable BCC Batch Mode.
-     *
-     * @var bool
-     */
-    public $BCCBatchMode = false;
-
-    /**
-     * Number of emails in each BCC batch
-     *
-     * @var int
-     */
-    public $BCCBatchSize = 200;
-
-    /**
-     * Enable notify message from server
-     *
-     * @var bool
-     */
-    public $DSN = false;
+	/**
+	 * Enable notify message from server
+	 *
+	 * @var boolean
+	 */
+	public $DSN = false;
 }

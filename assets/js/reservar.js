@@ -13,6 +13,20 @@ $(document).ready(function(){
     // Variabla footerPedido es el pie de cada variable menu
     var menu 
     var footerPedido
+    const MESES = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre",
+    ];
     
     ///Formulario Reserva
     $("#campo2").hide();
@@ -446,8 +460,9 @@ $(document).ready(function(){
              dataType: 'json',
              success: function (res) {
                 console.log(res.status)
-               var mensajeConsulta=document.getElementById('mensajeConsulta');
-               var mgsAlert="";
+                var mensajeConsulta=document.getElementById('mensajeConsulta');
+                var mgsAlert="";
+               
                 if (res.status==false) {
                     mgsAlert='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>No puede realizar la reserva dado que ya hay registro de otra reserva para la fecha seleccionada</strong><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
                 } else {
@@ -456,7 +471,7 @@ $(document).ready(function(){
                     console.log(res.statusMesaEncontrada)
                     } else {
                         console.log(res.statusMesaEncontrada)
-                    mgsAlert='<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Hay una mesa disponible para su reserva en la fecha '+fecha+'. Puede continuar haciendo click en el boton "Siguiente" de la reserva</strong><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
+                    mgsAlert='<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Hay una mesa disponible para su reserva para el dia '+f.getDate()+' de '+MESES[f.getMonth()]+' del '+f.getFullYear()+'.<br>Puede continuar haciendo click en el boton "Siguiente" de la reserva</strong><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
                 }
                 }
                     mensajeConsulta.innerHTML=mgsAlert;

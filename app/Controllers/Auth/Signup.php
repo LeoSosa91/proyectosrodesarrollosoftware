@@ -22,7 +22,7 @@ class Signup extends BaseController
 			'id_user'=>$faker->unique()->uuid,
 			'username'=>$request->getPostGet('inputName'),
 			'usersurname'=>$request->getPostGet('inputSurname'),
-			'userDni'=>$request->getPostGet('inputDni'),
+			'dniUsuario'=>$request->getPostGet('inputDni'),
 			'userBirthday'=>$request->getPostGet('inputFecNac'),
 			'useradress'=>$request->getPostGet('inputAddress'),
 			'usertel'=>$request->getPostGet('inputTel'),
@@ -103,4 +103,5 @@ class Signup extends BaseController
 			}
 		}
 	}
+	
 }

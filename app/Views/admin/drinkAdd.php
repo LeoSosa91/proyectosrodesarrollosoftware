@@ -36,14 +36,22 @@
                                 <div class="form-helper text-danger"><?=session('errors.inputNameDrink')?></div>
                                 <?php endif?>
                             </div>
+                                    
                             <div class="mb-3">
                                 <label class="form-label" for="typeDrink">Seleccione tipo de bebida</label>
                                 <select class="form-select" id="typeDrink" name="typeDrink">
                                     <option <?php echo (old('typeDrink') == "0") ? 'selected' : '';?> value="0">---</option>
-                                    <option <?php echo (old('typeDrink') == "1") ? 'selected' : '';?> value="1">BEBIDAS SIN ALCOHOL</option>
-                                    <option <?php echo (old('typeDrink') == "2") ? 'selected' : '';?> value="2">CERVEZAS</option>
-                                    <option <?php echo (old('typeDrink') == "3") ? 'selected' : '';?> value="3">VINOS</option>
-                                    <option <?php echo (old('typeDrink') == "4") ? 'selected' : '';?> value="4">COCTELES</option>
+                                    <?php
+                                    foreach ($options as $option) {
+                                        $cad='';
+                                        $cad.='<option ';
+                                        $value= strval($option['idCategoriaBebida']);
+                                        $cad.= (old('typeDrink') == $value) ? 'selected ' : '';
+                                        $cad.='value="'.$value.'">'.$option['nombreCategoriaBebida'].'</option>';
+                                        echo $cad;
+                                    }
+                                    ?>
+                                    
                                 </select>
                                 <?php if(session('errors.typeDrink')):?>
                                 <div class="form-helper text-danger"><?=session('errors.typeDrink')?></div>
@@ -93,3 +101,5 @@
     </div>
   </div>
 </div>
+<?=$this->include('front/footer');?>
+<?=$this->include('admin/jsAdmin');?>

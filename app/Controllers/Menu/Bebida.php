@@ -7,47 +7,71 @@ class Bebida extends BaseController{
 
 	public function index(){   
 		$model= model('BeverageModel');
-		$bebidas=$model->orderBy('nombreBebida', 'asc')->findAll();
-		$tipoBebidas=$model->groupBy('idCategoriaBebida')->orderBy('idCategoriaBebida', 'asc')->findColumn('idCategoriaBebida');
+		$bebidas=$model->where('deleted_at',null)->orderBy('nombreBebida', 'asc')->findAll();
 		$cardsBebidas='';
 		$num=1;
 		$db      = \Config\Database::connect();
-		$builder = $db->table('categoriabebida');
-		$query   = $builder->get();
-		$data=$query->getResultArray();
+		$categorias = $db->table('categoriabebida')->get()->getResultArray();
+		//$bebidas = $db->query('SELECT * FROM `listado_bebidas`')->getResultArray();
+		foreach ($categorias as $categoria) {
+			$cardsBebidas.='<div class="accordion-item"> 
+							<h2 class="accordion-header border border-dark" id="flush-heading'.$num.'">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse'.$num.'" aria-expanded="false" aria-controls="flush-collapse'.$num.'">'.$categoria['nombreCategoriaBebida'].'</button>
+							</h2>
+							<div id="flush-collapse'.$num.'" class="accordion-collapse collapse" aria-labelledby="flush-heading'.$num.'" data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">';
+				foreach ($bebidas as $bebida) {
+					if ($bebida['idCategoriaBebida']==$categoria['idCategoriaBebida']) {
+						$cardsBebidas.='<div class="row">
+											<div class="col-8">
+											<h6>'.$bebida['nombreBebida'].'</h6>
+													</div>
+											<div class="col-4 text-end">
+											<h6>$'.$bebida['precioBebida'].'.00</h6>
+											</div>
+										</div>';
+					}
+				}
+				$cardsBebidas.='</div></div></div>';
 
-		foreach ($tipoBebidas as $tipoBebida) {
-			$cardsBebidas.='<button class="btn btn-dark mb-3 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample'.$num.'" aria-expanded="false" aria-controls="multiCollapseExample'.$num.'"><span class="">';
-			foreach ($data as $categoria) {
-				$cardsBebidas.= ($tipoBebida==$categoria['idCategoriaBebida']) ?  $categoria['nombreCategoriaBebida']:"";
-			
-			}
-			
-			$cardsBebidas.='</span><span class="text-end">
-			<span class="right-icon">
-			  <i class="bi bi-chevron-down"></i>
-			</span>
-		  	</span></button>
-			<div class="collapse multi-collapse" id="multiCollapseExample'.$num.'">';
-			
-			foreach ($bebidas as $bebida) {
-			if ($tipoBebida==$bebida['idCategoriaBebida']) {
-				$cardsBebidas.='<div class="row">
-				<div class="col-10">
-				<h6>'.$bebida['nombreBebida'].'</h6>
-						</div>
-				<div class="col-2 text-end">
-				<h6>$'.$bebida['precioBebida'].'.00</h6>
-				</div>
-				</div>';
-			}
-			}
-			$cardsBebidas.='</div>';
 			$num++;
 		}
+		// $query   = $builder->get();
+		// $data=$query->getResultArray();
+
+		// foreach ($tipoBebidas as $tipoBebida) {
+		// 	$cardsBebidas.='<button class="btn btn-dark mb-3 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample'.$num.'" aria-expanded="false" aria-controls="multiCollapseExample'.$num.'"><span class="">';
+		// 	foreach ($data as $categoria) {
+		// 		$cardsBebidas.= ($tipoBebida==$categoria['idCategoriaBebida']) ?  $categoria['nombreCategoriaBebida']:"";
+			
+		// 	}
+			
+		// 	$cardsBebidas.='</span><span class="text-end">
+		// 	<span class="right-icon">
+		// 	  <i class="bi bi-chevron-down"></i>
+		// 	</span>
+		//   	</span></button>
+		// 	<div class="collapse multi-collapse" id="multiCollapseExample'.$num.'">';
+			
+		// 	foreach ($bebidas as $bebida) {
+		// 	if ($tipoBebida==$bebida['idCategoriaBebida']) {
+		// 		$cardsBebidas.='<div class="row">
+		// 		<div class="col-10">
+		// 		<h6>'.$bebida['nombreBebida'].'</h6>
+		// 				</div>
+		// 		<div class="col-2 text-end">
+		// 		<h6>$'.$bebida['precioBebida'].'.00</h6>
+		// 		</div>
+		// 		</div>';
+		// 	}
+		// 	}
+		// 	$cardsBebidas.='</div>';
+		// 	$num++;
+		// }
 		$data['title']="Bebidas";
 		$data['bebidas']=$cardsBebidas;
-		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Clients/beverage',$data).view('Front/script_client');
+		// .view('Front/script_client')
+		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Clients/beverage',$data);
 	}
     public function buscarBebida()
 	{

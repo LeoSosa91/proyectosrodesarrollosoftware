@@ -6,49 +6,42 @@ class Plato extends BaseController{
 	public function index()
 	{
 		$model= model('FoodModel');
-		$platos=$model->orderBy('nombrePlato', 'asc')->findAll();
-		$tipoPlatos=$model->groupBy('idCategoriaPlato')->orderBy('idCategoriaPlato', 'asc')->findColumn('idCategoriaPlato');
+		$platos=$model->where('deleted_at',null)->orderBy('nombrePlato', 'asc')->findAll();
 		$cardsPlatos='';
 		$num=1;
 		$db      = \Config\Database::connect();
-		$builder = $db->table('categoriaplato');
-		$query   = $builder->get();
-		$data=$query->getResultArray();
-	
-		foreach ($tipoPlatos as $tipoPlato) {
-			$cardsPlatos.='<button class="btn btn-dark mb-3 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample'.$num.'" aria-expanded="false" aria-controls="multiCollapseExample'.$num.'"><span class="">';
-			foreach ($data as $categoria) {
-				$cardsPlatos.= ($tipoPlato==$categoria['idCategoriaPlato']) ?  $categoria['nombreCategoriaPlato']:"";
-			
-			}
+		$categorias = $db->table('categoriaplato')->get()->getResultArray();
 		
-			$cardsPlatos.='</span><span class="text-end">
-			<span class="right-icon">
-			  <i class="bi bi-chevron-down"></i>
-			</span>
-		  	</span></button>
-			<div class="collapse multi-collapse" id="multiCollapseExample'.$num.'">';
-			
-			foreach ($platos as $plato) {
-			if ($tipoPlato==$plato['idCategoriaPlato']) {
-				$cardsPlatos.='<div class="row">
-				<div class="col-10">
-				<h6>'.$plato['nombrePlato'].'</h6>
-				<p>'.$plato['descripcionPlato'].'</p>
-				</div>
-				<div class="col-2 text-end">
-				<h6>$'.$plato['precioPlato'].'.00</h6>
-				</div>
-				</div>';
-			}
-			}
-			$cardsPlatos.='</div>';
+		foreach ($categorias as $categoria) {
+			$cardsPlatos.='<div class="accordion-item"> 
+							<h2 class="accordion-header border border-dark" id="flush-heading'.$num.'">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse'.$num.'" aria-expanded="false" aria-controls="flush-collapse'.$num.'">'.$categoria['nombreCategoriaPlato'].'</button>
+							</h2>
+							<div id="flush-collapse'.$num.'" class="accordion-collapse collapse" aria-labelledby="flush-heading'.$num.'" data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">';
+				foreach ($platos as $plato) {
+					if ($plato['idCategoriaPlato']==$categoria['idCategoriaPlato']) {
+						$cardsPlatos.='<div class="row">
+											<div class="col-10">
+											<h6>'.$plato['nombrePlato'].'</h6>
+											<p>'.$plato['descripcionPlato'].'</p>
+											</div>
+											
+											<div class="col-2 text-end">
+											<h6>$'.$plato['precioPlato'].'.00</h6>
+											</div>
+											<hr>
+										</div>';
+					}
+				}
+				$cardsPlatos.='</div></div></div>';
+
 			$num++;
 		}
 		$data['title']="Platos";
 		$data['platos']=$cardsPlatos;
-		
-		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Clients/food',$data).view('Front/script_client');
+		// .view('Front/script_client')
+		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Clients/food',$data);
 	}
 	public function buscarPlato()
 	{

@@ -39,7 +39,7 @@ $routes->group('/', ['namespace' => 'App\Controllers\Front'],function($routes)
 {
 	$routes->add('', 'Home::index',['as'=>'home']);
 	$routes->add('recuperarPassword', 'Home::recoverPassword',['as'=>'recuperarPassword']);
-	$routes->post('validarPassword', 'Home::validateRecoverPassword');
+	$routes->post('validarPassword', 'Home::validateRecoverPassword',['as'=>'validarPassword']);
 	$routes->get('resetPassword', 'Home::resetPassword');
 	$routes->post('newPassword', 'Home::validateResetPassword');
 	$routes->post('check','Home::signIn',['as'=>'signIn']);

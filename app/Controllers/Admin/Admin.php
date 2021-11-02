@@ -139,18 +139,11 @@ class Admin extends BaseController{
 	public function drinkAdd()
 	{
 		$db      = \Config\Database::connect();
-		$builder = $db->table('categoriabebida');
-		$query   = $builder->get();
-		// $tipoBebida='';
-		// foreach ($query->getResult() as $row)
-		// {
-		// 	$tipoBebida.='<option';
-		// 	$tipoBebida.=(old('typeDrink') == "$row->idCategoriaBebida") ? 'selected' : '';
-		// 	$tipoBebida.=' value="'.$row->idCategoriaBebida.'">'.$row->nombreCategoriaBebida.'</option>';
-		// }
+		// $builder = $db->table('categoriabebida')->get()->getResultArray();
+		// $query   = $builder->get();
 		$data['title']='Agregar bebida';
-		$data['options']=$query->getResult('array');
-		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Admin/drinkAdd',$data).view('Admin/footer');
+		$data['options']=$db->table('categoriabebida')->get()->getResultArray();
+        return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Admin/drinkAdd',$data);
 	}
 	public function drinkEdit()
 	{

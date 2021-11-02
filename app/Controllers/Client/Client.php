@@ -11,7 +11,6 @@ class Client extends BaseController
 		if (!session()->is_logged) {
 			return redirect()->route('home');
 		}
-		// .view('Front/script_client')
 		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Clients/home');
 	}
     public function infoClient()
@@ -189,7 +188,11 @@ class Client extends BaseController
 	{
 		$data['title']="Mis Reservas";
 		$db = \Config\Database::connect();
-		$query = $db->table('reserva')->where('estadoReserva', "Cancelado")->get();
+		$condition=[
+			'estadoReserva'=>'Cancelado',
+			'id_user'=>session()->get('id_user'),
+		];
+		$query = $db->table('reserva')->where($condition)->get();
 		$data['title']="Mis Reservas Canceladas";
 		$data['reservasCanceladas']=$query->getResult('array');
 		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Clients/reservasCanceladas',$data);
@@ -198,7 +201,11 @@ class Client extends BaseController
 	{
 		$data['title']="Mis Reservas En Curso";
 		$db = \Config\Database::connect();
-		$query = $db->table('reserva')->where('estadoReserva', "En curso")->get();
+		$condition=[
+			'estadoReserva'=>'En curso',
+			'id_user'=>session()->get('id_user'),
+		];
+		$query = $db->table('reserva')->where($condition)->get();
 		$data['title']="Mis Reservas En Curso";
 		$data['reservasEnCurso']=$query->getResult('array');
 		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Clients/reservasEnCurso',$data);
@@ -288,7 +295,11 @@ class Client extends BaseController
 	public function reservasRealizadas()
 	{
 		$db = \Config\Database::connect();
-		$query = $db->table('reserva')->where('estadoReserva', "Hecha")->get();
+		$condition=[
+			'estadoReserva'=>'Hecha',
+			'id_user'=>session()->get('id_user'),
+		];
+		$query = $db->table('reserva')->where($condition)->get();
 		$data['title']="Mis Reservas Realizadas";
 		$data['reservasHechas']=$query->getResult('array');
 		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Clients/reservasRealizadas',$data);

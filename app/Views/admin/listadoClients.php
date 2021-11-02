@@ -22,7 +22,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 <?php endif;?>
-                <table id="example" class="table table-striped" style="width:100%; height:100%">
+                <table id="tablaClientes" class="display nowrap" style="width:100%">
                     <thead>
                         <tr>
                             <th>DNI</th>
@@ -211,22 +211,41 @@
 <!-- modalConfirmDelete -->
 <?=$this->include('front/footer');?>
 <?=$this->include('admin/jsAdmin');?>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
 <script type="text/javascript" src="<?=base_url();?>/assets/js/gestionCliente.js"></script>
 <script type="text/javascript" src="<?=base_url();?>/assets/js/validarFormEditarCliente.js"></script>
 <script>
     var baseURL= "<?= base_url();?>";
     $(document).ready(function() {
-      $('#example').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-        },
-        "scrollY":        "400px",
+      $('#tablaClientes').DataTable({
+        "scrollY": 230,
         "scrollX": true,
-        "scrollCollapse": true,
-        "paging":         true
+        "language": {
+            "decimal":        "",
+        "emptyTable":     "No hay datos disponibles en la tabla",
+        "info":           "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+        "infoEmpty":      "Mostrando 0 a 0 de 0 entradas",
+        "infoFiltered":   "(filtrado desde _MAX_ total entradas)",
+        "infoPostFix":    "",
+        "thousands":      ",",
+        "lengthMenu":     "Mostrando _MENU_ entradas",
+        "loadingRecords": "Cargando...",
+        "processing":     "Procesando...",
+        "search":         "Buscar:",
+        "zeroRecords":    "No se encontraron registros coincidentes",
+        "paginate": {
+            "first":      "Primero",
+            "last":       "Ultimo",
+            "next":       "Siguiente",
+            "previous":   "Anterior"
+        },
+        "aria": {
+            "sortAscending":  ": activar para ordenar la columna ascendente",
+            "sortDescending": ": activar para ordenar la columna descendente"
+        }
+        }
+        
       });
     } );
 </script>

@@ -4,7 +4,7 @@
         <hr class="hr-light">
         <div class="row g-0">
             <div class="col-md-11">
-            <h3><strong>Mis reservas canceladas</strong></h3>
+            <h3><strong>Mis reservas en curso</strong></h3>
             </div>
             <div class="col-md-1">
                 <!-- Button trigger modal -->
@@ -22,7 +22,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php endif;?>
-                <table id="tablaReservasEnCurso" class="table table-striped" style="width:100%; height:100%">
+            <!-- class="table table-striped" style="width:100%; height:100%" -->
+            
+                <table id="tablaReservasEnCurso" class="display nowrap" style="width:100%">
                     <thead>
                         <tr>
                             <th>Fecha</th>
@@ -243,16 +245,40 @@
 <!--Modal: modalCancelarReserva-->
 <?=$this->include('clients/footer');?>
 <?=$this->include('clients/jsClient');?>
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+
 <script>
-    var baseURL= "<?= base_url();?>";
     $(document).ready(function() {
     $('#tablaReservasEnCurso').DataTable( {
+        "scrollY": 230,
+        "scrollX": true,
         "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
-            "paging": true
+            "decimal":        "",
+        "emptyTable":     "No hay datos disponibles en la tabla",
+        "info":           "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+        "infoEmpty":      "Mostrando 0 a 0 de 0 entradas",
+        "infoFiltered":   "(filtrado desde _MAX_ total entradas)",
+        "infoPostFix":    "",
+        "thousands":      ",",
+        "lengthMenu":     "Mostrando _MENU_ entradas",
+        "loadingRecords": "Cargando...",
+        "processing":     "Procesando...",
+        "search":         "Buscar:",
+        "zeroRecords":    "No se encontraron registros coincidentes",
+        "paginate": {
+            "first":      "Primero",
+            "last":       "Ultimo",
+            "next":       "Siguiente",
+            "previous":   "Anterior"
+        },
+        "aria": {
+            "sortAscending":  ": activar para ordenar la columna ascendente",
+            "sortDescending": ": activar para ordenar la columna descendente"
         }
+        }
+        
     } );
 } );
 </script>
