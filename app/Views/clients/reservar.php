@@ -55,20 +55,18 @@
                                 </div>
                                 <input type="button" id="btnConsultar" name="btnConsultar" class="btn btn-outline-secondary" value="Consultar" />
                                 <input type="button" style="visibility: hidden" name="next" id="btnSiguiente" class="next btn btn-info" value="Siguiente"/>
-                                
                             </fieldset>    
                             <fieldset id="campo2">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                  
-                                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#foodModal">Plato</button>
-                                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#beverageModal">Bebida</button>
+                                  <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#foodModal"><i class="fas fa-plus"></i> Plato</button>
+                                  <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#beverageModal"><i class="fas fa-plus"></i>Bebida</button>
                                 </div>
                                 <div class="container mb-3" id="menusPlatosBebidas"></div>
                            
                                 <input type="button" name="previous" class="previous btn btn-default" value="Previo" />
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary" id="btnReservar" >Reservar</button>
-                                <!-- data-bs-toggle="modal" data-bs-target="#reservaModal" -->
                             </fieldset>
                         </form>
                     </div>
@@ -169,15 +167,12 @@
     <div class="modal-content">
       <div class="modal-header bg-danger bg-gradient">
         <p class="display-6 text-white">ERROR</p>
-        <!-- <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5> -->
-        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
       </div>
       <div class="modal-body">
         <p class="text-danger">Se encontró al menos un pedido sin completar. Por favor que recuerde los pedidos deben tener al menos una bebida y un plato.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Entendido</button>
-        <!-- <button type="button" class="btn btn-primary">Understood</button> -->
       </div>
     </div>
   </div>
@@ -193,6 +188,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <div id="contenedorTexto"></div>
         <h4>TOTAL A PAGAR: $ <span id="idPTotalAPagar"></span></h4>
         <h5>¿Desea registrar la reserva con los datos solicitados</h5>
       </div>
@@ -216,5 +212,5 @@
 </div>
 
 <script type='text/javascript'>
-    var baseURL= "<?php echo base_url();?>";
+    var baseURL= "<?= base_url();?>";
 </script>

@@ -118,8 +118,8 @@ class Promocion extends BaseController{
 	public function consultarPromocion(){
 		$db = \Config\Database::connect();
 		$request= \Config\Services::request();
-		$dniUsu=$request->getPostGet('idUser');
-		$query = $db->query('select * from penalidadcliente where id_user = "'.$dniUsu.'" ');
+		$idUser=$request->getPostGet('idUser');
+		$query = $db->query('select * from penalidadcliente where id_user = "'.$idUser.'" ');
 		$results = $query->getResultArray();
 		$descuento=null;
 		$idpromo=null;
@@ -140,12 +140,14 @@ class Promocion extends BaseController{
 				  'descuentoPromocion'=>0,);
 				  $auxPromo = $data;
 			}
+		// echo json_encode(array("status" => "false-en promocion" , 'data' => $auxPromo));
 		echo json_encode(array("status" => "false-en promocion" , 'data' => $auxPromo));
 		}else {
 			$data=array(
 				'idPromocion'=>0,
 					'descuentoPromocion'=>0,
 				);
+			//echo json_encode(array("status" => "false-en penalidades" , 'data' => $data));
 			echo json_encode(array("status" => "false-en penalidades" , 'data' => $data));
   
 		}

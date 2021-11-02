@@ -462,7 +462,7 @@ $(document).ready(function(){
                 console.log(res.status)
                 var mensajeConsulta=document.getElementById('mensajeConsulta');
                 var mgsAlert="";
-               
+                f= new Date(fecha+" "+hora+":00");
                 if (res.status==false) {
                     mgsAlert='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>No puede realizar la reserva dado que ya hay registro de otra reserva para la fecha seleccionada</strong><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
                 } else {
@@ -481,37 +481,40 @@ $(document).ready(function(){
              }
         })
     })
+    const agregarValueAInputFormReserva =(fecha,totalAPagar,turno,hora,idProm,listado)=>{
+        document.getElementById('fechaRes').value = fecha
+                    document.getElementById('preciototal').value = totalAPagar
+                    document.getElementById('turno').value = turno
+                    document.getElementById('horario').value = hora
+                    document.getElementById('idprom').value = idProm
+                    document.getElementById('pedidos').value=JSON.stringify(listado);
+                    document.getElementById('idPTotalAPagar').innerText=totalAPagar
+    }
+
     const agregarDatosAReserva =(totalAPagar,listado)=>{
+        
         $.ajax({
             url:baseURL+'/menu/promocion/consultarPromocion',
             method: 'post',
             data: {idUser: document.getElementById('idUser').value},
             dataType: 'json',
             success: function (res) {
+                
                 var fecha = $('#inputFecha').val();
                 var hora = $("#idHora option:selected").val();
                 var turno = $("#idTurnoRes option:selected").val();
+                var texto="";
                 if (res.data.idPromocion == 0) {
-                    document.getElementById('fechaRes').value = fecha
-                    document.getElementById('preciototal').value = totalAPagar
-                    document.getElementById('turno').value = turno
-                    document.getElementById('horario').value = hora
-                    document.getElementById('idprom').value = res.data.idPromocion
-                    document.getElementById('pedidos').value=JSON.stringify(listado);
-                    document.getElementById('idPTotalAPagar').innerText=totalAPagar
+                    agregarValueAInputFormReserva(fecha,totalAPagar,turno,hora,res.data.idPromocion,listado);
+                    texto='';
                 }else {
                     ///Se calcula precio a pagar con descuento
                     totalAPagar = totalAPagar - parseInt((totalAPagar*res.data.descuentoPromocion)/100)
-                    ///
-                    document.getElementById('fechaRes').value = fecha
-                    document.getElementById('preciototal').value = totalAPagar
-                    document.getElementById('turno').value = turno
-                    document.getElementById('horario').value = hora
-                    document.getElementById('idprom').value = res.data.idPromocion
-                    document.getElementById('pedidos').value=JSON.stringify(listado);
-                    document.getElementById('idPTotalAPagar').innerText=totalAPagar
-                    
+                    agregarValueAInputFormReserva(fecha,totalAPagar,turno,hora,res.data.idPromocion,listado);
+                    texto='Felicidades. Tuvo un descuento de '+res.data.descuentoPromocion.toString()+"%";
                 }
+                $("#contenedorTextPromo").remove();
+                $('<p/>').attr({id:'contenedorTextPromo',name:'contenedorTextPromo',class:'display-5'}).appendTo('#contenedorTexto').text(texto);
             }
         })
         $("#reservaModal").modal("show");

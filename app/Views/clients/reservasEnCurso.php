@@ -22,8 +22,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php endif;?>
-            <!-- class="table table-striped" style="width:100%; height:100%" -->
-            
                 <table id="tablaReservasEnCurso" class="display nowrap" style="width:100%">
                     <thead>
                         <tr>
@@ -250,6 +248,7 @@
 
 
 <script>
+    var baseURL= "<?= base_url();?>";
     $(document).ready(function() {
     $('#tablaReservasEnCurso').DataTable( {
         "scrollY": 230,

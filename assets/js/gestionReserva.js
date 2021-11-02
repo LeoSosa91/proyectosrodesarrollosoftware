@@ -181,7 +181,7 @@ const cargarFormModificarPedidoPlatoBebida =(tipo,id,nombre,nroPedido,cantidad,i
       $('<select/>').attr({id:'selectModPedPlatoBebida',name:'selectModPedPlatoBebida',class:'form-select'}).appendTo('#contenedorSelectModPedPlato');
       $('<div/>').attr({class:'mb-3',id:'contenedorInputModPedPlatoCantidad'}).appendTo('#formMod');
       $('<label/>').attr({class:'form-label',for:'inputModCantidad'}).appendTo('#contenedorInputModPedPlatoCantidad').text('Cantidad');
-      $('<input/>').attr({type:'number',id:'inputModCantidad',name:'inputModCantidad',class:'form-control', value:cantidad}).appendTo('#contenedorInputModPedPlatoCantidad');
+      $('<input/>').attr({type:'number',id:'inputModCantidad',name:'inputModCantidad',class:'form-control',min:'1', value:cantidad}).appendTo('#contenedorInputModPedPlatoCantidad');
       listarPlatos()    
       break;
     case "Bebida":
@@ -193,7 +193,7 @@ const cargarFormModificarPedidoPlatoBebida =(tipo,id,nombre,nroPedido,cantidad,i
       $('<select/>').attr({id:'selectModPedPlatoBebida',name:'selectModPedPlatoBebida',class:'form-select'}).appendTo('#contenedorSelectModPedBebida');
       $('<div/>').attr({class:'mb-3',id:'contenedorInputModPedBebidaCantidad'}).appendTo('#formMod');
       $('<label/>').attr({class:'form-label',for:'inputModCantidad'}).appendTo('#contenedorInputModPedBebidaCantidad').text('Cantidad');
-      $('<input/>').attr({type:'number',id:'inputModCantidad',name:'inputModCantidad',class:'form-control', value:cantidad}).appendTo('#contenedorInputModPedBebidaCantidad');
+      $('<input/>').attr({type:'number',id:'inputModCantidad',name:'inputModCantidad',class:'form-control',min:'1', value:cantidad}).appendTo('#contenedorInputModPedBebidaCantidad');
       listarBebidas()   
       break;
   
