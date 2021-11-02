@@ -34,7 +34,12 @@ class Home extends BaseController
 
 		$model= model('UserModel');
 		if (!$user=$model->getUserBy('useremail',$email)) {
-			return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Este usuario no se encuentra registrado en el sistema.']);
+			
+			return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Este usuario no se encuentra registrado en el sistema. O se encuentra deshabilitada la cuenta.']);
+		}
+		
+		if (!password_verify($password,$user->password)) {
+			return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Las credenciales no son validas.']);
 		}
 		
 		if (!password_verify($password,$user->password)) {
@@ -56,8 +61,8 @@ class Home extends BaseController
 				return redirect()->route('homeChef')->with('msg',['type'=> 'success', 'body'=>'Bienvenido Chef '.$user->usersurname.' '.$user->username]);
 				break;
 			default:
-			echo'mal';
-				// return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Este usuario no puede acceder. Disculpe las molestias.']);
+			// echo'mal';
+				return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Este usuario no puede acceder. Disculpe las molestias.']);
 				break;
 		}
 		

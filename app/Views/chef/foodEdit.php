@@ -78,7 +78,7 @@
                 </div>
                 <div class="col-md-12 col-lg-9">
                     <div class="card-body">
-                        <table id="example" class="table table-striped" style="width:100%; height:100%">
+                        <table id="tablaComida" class="display " >
                             <thead>
                                 <tr>
                                     <th>Nombre de Plato</th>
@@ -134,33 +134,47 @@
     </div>
   </div>
 </div>
-<!--Footer-->
-<footer class="fixed-bottom bg-light text-lg-start mt-3">
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2021 Copyright: SRO Version 0.0.3
-    </div>
-    <!-- Copyright -->
-</footer>
-<!--Footer-->
+<?=$this->include('front/footer');?>
+<?=$this->include('chef/jsChef');?>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
 <script type="text/javascript" src="<?=base_url();?>/assets/js/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="<?=base_url();?>/assets/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="<?=base_url();?>/assets/js/dataTables.bootstrap5.min.js"></script>
+<script type="text/javascript" src="<?=base_url();?>/assets/js/dataTables.bootstrap5.min.js"></script> -->
 <script type="text/javascript" src="<?=base_url();?>/assets/js/editFood.js"></script>
 <script>
     var baseURL= "<?php echo base_url();?>";
 $(document).ready(function() {
-    $('#example').DataTable({
-    "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-    },
-    "scrollY":        "400px",
-    "scrollCollapse": true,
-    "paging":         false
+    $('#tablaComida').DataTable({
+        "scrollY": 230,
+        "scrollX": false,
+        "language": {
+            "decimal":        "",
+        "emptyTable":     "No hay datos disponibles en la tabla",
+        "info":           "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+        "infoEmpty":      "Mostrando 0 a 0 de 0 entradas",
+        "infoFiltered":   "(filtrado desde _MAX_ total entradas)",
+        "infoPostFix":    "",
+        "thousands":      ",",
+        "lengthMenu":     "Mostrando _MENU_ entradas",
+        "loadingRecords": "Cargando...",
+        "processing":     "Procesando...",
+        "search":         "Buscar:",
+        "zeroRecords":    "No se encontraron registros coincidentes",
+        "paginate": {
+            "first":      "Primero",
+            "last":       "Ultimo",
+            "next":       "Siguiente",
+            "previous":   "Anterior"
+        },
+        "aria": {
+            "sortAscending":  ": activar para ordenar la columna ascendente",
+            "sortDescending": ": activar para ordenar la columna descendente"
+        }
+        }
     });
 } );
 </script>
