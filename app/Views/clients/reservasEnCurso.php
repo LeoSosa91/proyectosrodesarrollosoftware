@@ -48,7 +48,7 @@
                                 echo'<td>'.$reserva['estadoReserva'].'</td>
                                     <td>';
                         ?>
-                        <?php if ($diff->days>2) {?>
+                        <?php if ($diff->days>=2 && $diff->h>=48) {?>
                         <button type="button" class="btn btn-warning btnModificarReserva" data-bs-toggle="modal" data-bs-target="#modifyOrderModal">
                             <i class="fas fa-edit mr-2"></i> Modificar
                         </button>

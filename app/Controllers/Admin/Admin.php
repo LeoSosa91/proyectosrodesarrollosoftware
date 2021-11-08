@@ -524,7 +524,7 @@ public function obtenerReporteReservasDelDia($fechaInicio,$fechaFinal){
     $db = \Config\Database::connect();
 
 
-    $query = $db->query('select dniUsuario, turnoReserva, horario, idMesa, fechaReserva, asistenciaReserva from reserva where fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'" and (estadoReserva = "En Curso") order by fechaReserva desc');
+    $query = $db->query('select u.dniUsuario, r.turnoReserva, r.horario, r.idMesa, r.fechaReserva, r.asistenciaReserva from reserva as r inner join user as u on u.id_user = r.id_user where fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'" and (r.estadoReserva = "En Curso") and u.deleted_at is null order by r.fechaReserva desc');
 
     $pdf = new \FPDF();
     $pdf->AddPage();
@@ -618,41 +618,40 @@ public function obtenerReporteReservasDelDia($fechaInicio,$fechaFinal){
 
     public function imprimirReporte(){
         $request= \Config\Services::request();
-        $fechaInicio=$request->getPostGet('FechaInicioReportePlatos');
-        $fechaFinal=$request->getPostGet('FechaHastaReportePlatos');
-        $tipoRepo=$request->getPostGet('TipoReporte');
+        $fechaInicio=$request->getPostGet('inputFechaInicioReportePlatos');
+        $fechaFinal=$request->getPostGet('inputFechaHastaReportePlatos');
+        $tipoRepo=$request->getPostGet('inputTipoReporte');
 
+        // echo json_encode(['ñe'=>'hola']);
+        $db = \Config\Database::connect();
         switch ($tipoRepo) {
         case '1':
         //Ranking platos
-            $db = \Config\Database::connect();
-            $query = $db->query('select p.nombrePlato, count(p.nombrePlato) as cantidad from reserva as r inner join pedido as g inner join plato as p inner join pedidoplato as c where (r.fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'") and r.idReserva = g.idReserva and g.nroPedido = c.nroPedido and c.idPlato = p.idPlato group by p.nombrePlato order by cantidad desc,p.nombrePlato limit 5');
-            echo json_encode($query->getResultArray());
-            break;
-            case '2':
-            //reservas canceladas
-            $db = \Config\Database::connect();
-            $query = $db->query('select id_user, turnoReserva, horario, idMesa, fechaReserva from reserva where (fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'") and (estadoReserva = "Cancelada") order by fechaReserva desc');
-            echo json_encode($query->getResultArray());
-            break;
-            case '3':
-            //horarios mas demandados
-                $db = \Config\Database::connect();
-                $query = $db->query('select horario, count(*) as cantidad from reserva where fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'" group by horario having count(*)>1 order by cantidad desc limit 5');
-                echo json_encode($query->getResultArray());
-                break;
-                case '4':
-                //clientes no asistencia
-                $db = \Config\Database::connect();
-                $query = $db->query('select u.dniUsuario, u.nombreUsuario, u.apellidoUsuario, u.emailUsuario, u.telefono, r.fechaReserva from reserva as r inner join usuario as u where (r.fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'") and (r.asistenciaReserva = "No asistio") and r.id_user = u.id_user order by u.apellidoUsuario asc');
-                echo json_encode($query->getResultArray());
-                break;
-                case '5':
-                //reservas del dia
-                    $db = \Config\Database::connect();
-                    $query = $db->query('select dniUsuario, turnoReserva, horario, idMesa, fechaReserva, asistenciaReserva from reserva where fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'" and (estadoReserva = "En Curso") order by fechaReserva desc');
-                    echo json_encode($query->getResultArray());
-                    break;
+        $query = $db->query('select p.nombrePlato, count(p.nombrePlato) as cantidad from reserva as r inner join pedido as g inner join plato as p inner join pedidoplato as c where (r.fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'") and r.idReserva = g.idReserva and g.nroPedido = c.nroPedido and c.idPlato = p.idPlato group by p.nombrePlato order by cantidad desc,p.nombrePlato limit 5');
+        echo json_encode($query->getResultArray());
+        break;
+        case '2':
+        //reservas canceladas
+        $query = $db->query('select id_user, turnoReserva, horario, idMesa, fechaReserva from reserva where (fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'") and (estadoReserva = "Cancelada") order by fechaReserva desc');
+        echo json_encode($query->getResultArray());
+        break;
+        case '3':
+        //horarios mas demandados
+        $query = $db->query('select horario, count(*) as cantidad from reserva where fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'" group by horario having count(*)>1 order by cantidad desc limit 5');
+        echo json_encode($query->getResultArray());
+        break;
+        case '4':
+        //clientes no asistencia
+        $query = $db->query('select u.dniUsuario, u.nombreUsuario, u.apellidoUsuario, u.emailUsuario, u.telefono, r.fechaReserva from reserva as r inner join usuario as u where (r.fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'") and (r.asistenciaReserva = "No asistio") and r.id_user = u.id_user order by u.apellidoUsuario asc');
+        echo json_encode($query->getResultArray());
+        break;
+        case '5':
+        //reservas del dia
+        
+        // $query = $db->query('select dniUsuario, turnoReserva, horario, idMesa, fechaReserva, asistenciaReserva from reserva where fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'" and (estadoReserva = "En Curso") order by fechaReserva desc');
+        $query = $db->query('select u.dniUsuario,res.turnoReserva, res.horario, res.idMesa, res.fechaReserva, res.asistenciaReserva from reserva as res INNER join user u on u.id_user=res.id_user where res.fechaReserva between "'.$fechaInicio.'" and "'.$fechaFinal.'" and (res.estadoReserva = "En Curso") order by res.fechaReserva asc');
+        echo json_encode($query->getResultArray());
+        break;
         }
     }
 	public function encuesta()

@@ -213,10 +213,39 @@ selectVa.addEventListener('change',(event)=>{
 
 //Muestra los reportes admin en pantalla
 $("#btnObtenerReporte").click(function() {
+  //console.log(selectedOperation)
+
+  switch (selectedOperation) {
+    case "1":
+    validarreportepasad()
+      break;
+      case "2":
+      validarreportepasad()
+        break;
+        case "3":
+        validarreportepasad()
+          break;
+          case "4":
+          validarreportepasad()
+            break;
+            case "5":
+            validarreporte()
+              break;
+    default:
+    //return  redirect()->route('reportAdmin')->with('msg',['type'=> 'danger', 'body'=>'Error, debe seleccionar un tipo de reporte. Seleccione nuevamente.']);
+
+  }
+  //validarreporte()
+  // imprimirReporte();
+  
+
+});
+
+const imprimirReporte = () => {
   $.ajax({
-    url: baseURL+"/admin/imprimirReporte",
+    url:urlImprimirReporte,
     type: "POST",
-    data:{FechaInicioReportePlatos:fechaInicio.value,FechaHastaReportePlatos:fechaFin.value,TipoReporte:selectedOperation},
+    data:{inputFechaInicioReportePlatos:fechaInicio.value,inputFechaHastaReportePlatos:fechaFin.value,inputTipoReporte:selectedOperation},
     dataType: 'json',
     success: function (res) {
       console.log(res)
@@ -225,13 +254,72 @@ $("#btnObtenerReporte").click(function() {
 
     }
   });
-
-  });
-
-
+}
 
 
 
 const pintarCarrito = () => {
     resultado.innerHTML = ''
+}
+
+const validarDatos = (data) => {
+  var nodeList = document.getElementById('formReporAdmin').childNodes;
+  console.log(data)
+  for (var i = 0; i < nodeList.length; i++) {
+    for (let j = 0; j < nodeList[i].childNodes.length; j++) {
+      if (Object.keys(data).length > 0) {
+        if (data.hasOwnProperty(nodeList[i].childNodes[j].name)) {
+            var input1 = document.getElementById(nodeList[i].childNodes[j].name);
+            input1.className = "form-select is-invalid";
+            idNodoPadreContenedor=nodeList[i].childNodes[j].parentNode.id
+            var valor = document.querySelector('#'+idNodoPadreContenedor+' div.form-helper.mb-5.text-danger')
+            //console.log(valor)
+            valor.innerHTML = data[nodeList[i].childNodes[j].name]
+          }
+      }
+    }
+  }
+
+}
+
+const validarreporte = () => {
+  $.ajax({
+    url:urlValidarReporte,
+    type: "POST",
+    data:{inputFechaInicioReportePlatos:fechaInicio.value,inputFechaHastaReportePlatos:fechaFin.value,inputTipoReporte:selectedOperation},
+    dataType: 'json',
+    success: function (res) {
+      console.log("aca 1")
+      console.log(urlValidarReporte);
+      console.log(res.status)
+      if (res.status==true) {
+        validarDatos(res.data)
+      }else{
+        imprimirReporte();
+      }
+      
+    },error: function (res) {
+      console.log(res)
+    }
+  });
+}
+
+const validarreportepasad = () => {
+  $.ajax({
+    //url: baseURL+"/reporte/validarreportepas",
+    url:urlValidarReportePas,
+    type: "POST",
+    data:{inputFechaInicioReportePlatos:fechaInicio.value,inputFechaHastaReportePlatos:fechaFin.value,inputTipoReporte:selectedOperation},
+    dataType: 'json',
+    success: function (res) {
+      if (res.status==true) {
+        validarDatos(res.data)
+      }else{
+        imprimirReporte();
+      }
+      //crearTabla(res)
+    },error: function (data) {
+
+    }
+  });
 }

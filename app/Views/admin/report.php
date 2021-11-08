@@ -21,8 +21,15 @@
                 <div class="col-md-7">
 
                     <div class="card-body">
-                        <form action="<?=base_URL().'/admin/reporteRanking'?>" method="post">
-                            <div class="mb-3 col-sm-12 col-md-6">
+                      <?php if(session('msg')):?>
+                <div class="alert alert-<?=session('msg.type')?> alert-dismissible fade show" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                    <div><strong><?=session('msg.body')?></strong></div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif;?>
+                        <form action="<?=base_URL().'/admin/reporteRanking'?>" method="post" id="formReporAdmin">
+                            <div class="mb-3 col-sm-12 col-md-6" id="contRepo1">
                                 <label class="form-label" for="inputTipoReporte">Ingrese tipo de reporte</label>
                                 <select name="inputTipoReporte" id="inputTipoReporte" class="form-select" aria-label="Default select example">
                                     <option value="0">---</option>
@@ -32,14 +39,17 @@
                                     <option value="4">Clientes que no asistieron</option>
                                     <option value="5">Reservas del dia</option>
                                 </select>
+                                <div class="form-helper mb-5 text-danger" id="errortipo"><?=session('errors.inputTipoReporte')?></div>
                             </div>
-                            <div class="mb-3 col-sm-12 col-md-6">
+                            <div class="mb-3 col-sm-12 col-md-6" id="contRepo2">
                                 <label class="form-label" for="inputFechaInicioReportePlatos">Ingrese fecha inicio</label>
-                                <input type="date" class="form-control" id="inputFechaInicioReportePlatos" name="inputFechaInicioReportePlatos" value="<?= date("Y-m-d")?>">
+                                <input type="date" class="form-control"  id="inputFechaInicioReportePlatos" name="inputFechaInicioReportePlatos" value="<?= date("Y-m-d")?>">
+                                <div class="form-helper mb-5 text-danger" id="errorini"><?=session('errors.inputFechaInicioReportePlatos')?></div>
                             </div>
-                            <div class="mb-3 col-sm-12 col-md-6">
+                            <div class="mb-3 col-sm-12 col-md-6" id="contRepo3">
                                 <label class="form-label" for="inputFechaHastaReportePlatos">Ingrese fecha hasta</label>
-                                <input type="date" class="form-control" id="inputFechaHastaReportePlatos" name="inputFechaHastaReportePlatos" value="<?= date("Y-m-d")?>">
+                                <input type="date" class="form-control"  id="inputFechaHastaReportePlatos" name="inputFechaHastaReportePlatos" value="<?= date("Y-m-d")?>">
+                                <div class="form-helper mb-5 text-danger" id="errorfin"><?=session('errors.inputFechaHastaReportePlatos')?></div>
                             </div>
                             <button type="submit" class="btn btn-outline-dark">Descargar reporte</button>
                             <button type="button" class="btn btn-dark" id="btnObtenerReporte">Obtener reporte</button>
@@ -50,7 +60,7 @@
         </div>
         <div class="card mb-3" >
             <div class="card-body p-4" id="resultado">
-                <span class="d-block">No se encontraron resultados.</span>
+                <span id="noresadm" class="d-block">No se encontraron resultados.</span>
             </div>
         </div>
 
@@ -95,6 +105,11 @@
 <script type="text/javascript" src="<?=base_url();?>/assets/js/report.js"></script>
 <script type='text/javascript'>
     var baseURL= "<?php echo base_url();?>";
+    var urlValidarReporte= "<?=base_url(route_to('validarReporte'));?>";
+    var urlValidarReportePas= "<?=base_url(route_to('validarReportepas'));?>";
+    var urlImprimirReporte= "<?=base_url(route_to('imprimirReporte'));?>";
+    
+    
 </script>
 </body>
 </html>

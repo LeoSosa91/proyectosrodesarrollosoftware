@@ -4,16 +4,7 @@ let valor = false
 $(document).ready(function(){
   let horarioPrevio=null
   let idReservaPrevia=null
-  // const itemsPedidos = document.getElementById('tablaPedidoModificar')
-  // itemsPedidos.addEventListener('click',e=>{addCarrito(e)})
-  // const addCarrito= e=>{
-    
-  //   if (e.target.classList.contains('btn')) {
-  //       // setCarrito(e.target.parentElement)
-  //       console.log(e.target.classList.contains('btn'))
-  //       // console.log(e.target.parentElement);
-  //   }
-  // }
+ 
 $(".btnCancelarReserva").click(function() {
     var fecha=$(this).parents("tr").find(".fecha").attr("fecha");
     var hora=$(this).parents("tr").find(".hora").attr("hora");

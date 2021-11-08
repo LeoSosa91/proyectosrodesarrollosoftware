@@ -42,9 +42,7 @@ class Home extends BaseController
 			return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Las credenciales no son validas.']);
 		}
 		
-		if (!password_verify($password,$user->password)) {
-			return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Las credenciales no son validas.']);
-		}
+			
 		session()->set([
 			'id_user'=>$user->id_user,
 			'group'=>$user->getRole()->name_group,

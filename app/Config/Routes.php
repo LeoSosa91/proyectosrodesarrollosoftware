@@ -97,30 +97,36 @@ $routes->group('chef',['namespace' => 'App\Controllers\Chef', 'filter'=>'auth:Ch
 	$routes->post('guardarInfoPersonal', 'Chef::guardarInfoPersonalChef',['as'=>'guardarInfoPersonalChef']);
 	$routes->post('guardarPassword', 'Chef::guardarPasswordChef',['as'=>'guardarPasswordChef']);
 });
-$routes->group('admin',['namespace' => 'App\Controllers\Admin', 'filter'=>'auth:Administrador'], function($routes)
+//'namespace' => 'App\Controllers\Admin', 
+$routes->group('admin',['filter'=>'auth:Administrador'], function($routes)
 {
-	$routes->add('', 'Admin::index',['as'=>'homeAdmin']);
-	$routes->add('infoAdmin', 'Admin::infoAdmin',['as'=>'infoAdmin']);
-	$routes->add('signout', 'Admin::signout',['as'=>'signoutAdmin']);
-	$routes->add('promocionEdit', 'Admin::promocionEdit',['as'=>'promocionEdit']);
-	$routes->add('promocionAdd', 'Admin::promocionAdd',['as'=>'promocionAdd']);
-	$routes->add('encuesta', 'Admin::encuesta',['as'=>'encuesta']);
-	$routes->add('drinkAdd', 'Admin::drinkAdd',['as'=>'drinkAdd']);
-	$routes->add('drinkEdit', 'Admin::drinkEdit',['as'=>'drinkEdit']);
-	$routes->add('report', 'Admin::report',['as'=>'reportAdmin']);
-	$routes->add('reporteRanking','Admin::crearReporte');
-	$routes->post('imprimirReporte','Admin::imprimirReporte');
-	$routes->post('verificarPenalidades','Admin::verificarPenalidades');
-	$routes->post('cargarDatosCliente','Admin::cargarDatosCliente');
-	$routes->post('validarModificarCliente','Admin::validarModificarCliente');
-	$routes->post('guardarCliente','Admin::guardarCliente');
-	$routes->post('borrarCliente','Admin::borrarCliente');
-	$routes->post('habilitarCliente','Admin::habilitarCliente');
-	$routes->post('modificarEncuesta','Admin::modificarEncuesta');
+	$routes->add('', 'Admin::index',['as'=>'homeAdmin','namespace' => 'App\Controllers\Admin']);
+	$routes->add('infoAdmin', 'Admin::infoAdmin',['as'=>'infoAdmin','namespace' => 'App\Controllers\Admin']);
+	$routes->add('signout', 'Admin::signout',['as'=>'signoutAdmin','namespace' => 'App\Controllers\Admin']);
+	$routes->add('promocionEdit', 'Admin::promocionEdit',['as'=>'promocionEdit','namespace' => 'App\Controllers\Admin']);
+	$routes->add('promocionAdd', 'Admin::promocionAdd',['as'=>'promocionAdd','namespace' => 'App\Controllers\Admin']);
+	$routes->add('encuesta', 'Admin::encuesta',['as'=>'encuesta','namespace' => 'App\Controllers\Admin']);
+	$routes->add('drinkAdd', 'Admin::drinkAdd',['as'=>'drinkAdd','namespace' => 'App\Controllers\Admin']);
+	$routes->add('drinkEdit', 'Admin::drinkEdit',['as'=>'drinkEdit','namespace' => 'App\Controllers\Admin']);
+	$routes->add('report', 'Admin::report',['as'=>'reportAdmin','namespace' => 'App\Controllers\Admin']);
+	$routes->add('reporteRanking','Admin::crearReporte',['namespace' => 'App\Controllers\Admin']);
+	$routes->post('imprimirReporte','Admin::imprimirReporte',['as'=>'imprimirReporte','namespace' => 'App\Controllers\Admin']);
+	$routes->post('verificarPenalidades','Admin::verificarPenalidades',['namespace' => 'App\Controllers\Admin']);
+	$routes->group('reporte', function($routes)
+	{
+		$routes->post('validarReporte','Reporte::validarReporte',['as'=>'validarReporte','namespace' => 'App\Controllers\Reporte']);
+		$routes->post('validarReportepas','Reporte::validarReportePas',['as'=>'validarReportepas','namespace' => 'App\Controllers\Reporte']);
+	});
+	$routes->post('cargarDatosCliente','Admin::cargarDatosCliente',['namespace' => 'App\Controllers\Admin']);
+	$routes->post('validarModificarCliente','Admin::validarModificarCliente',['namespace' => 'App\Controllers\Admin']);
+	$routes->post('guardarCliente','Admin::guardarCliente',['namespace' => 'App\Controllers\Admin']);
+	$routes->post('borrarCliente','Admin::borrarCliente',['namespace' => 'App\Controllers\Admin']);
+	$routes->post('habilitarCliente','Admin::habilitarCliente',['namespace' => 'App\Controllers\Admin']);
+	$routes->post('modificarEncuesta','Admin::modificarEncuesta',['namespace' => 'App\Controllers\Admin']);
 	// $routes->add('tableEdit', 'Admin::tableEdit',['as'=>'tableEdit']);
-	$routes->add('listadoClientes', 'Admin::listadoClientes',['as'=>'listadoClientes']);
-	$routes->post('guardarInfoPersonal', 'Admin::guardarInfoPersonal',['as'=>'guardarInfoPersonalAdmin']);
-	$routes->post('guardarPassword', 'Admin::guardarPassword',['as'=>'guardarPasswordAdmin']);
+	$routes->add('listadoClientes', 'Admin::listadoClientes',['as'=>'listadoClientes', 'namespace' => 'App\Controllers\Admin']);
+	$routes->post('guardarInfoPersonal', 'Admin::guardarInfoPersonal',['as'=>'guardarInfoPersonalAdmin', 'namespace' => 'App\Controllers\Admin']);
+	$routes->post('guardarPassword', 'Admin::guardarPassword',['as'=>'guardarPasswordAdmin', 'namespace' => 'App\Controllers\Admin']);
 });
 //'namespace' => 'App\Controllers\Client',
 $routes->group('clients',[ 'filter'=>'auth:Cliente'], function($routes)

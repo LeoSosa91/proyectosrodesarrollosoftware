@@ -54,7 +54,7 @@ class Client extends BaseController
 			'turnoReserva'=>$request->getPostGet('turno'),
 			'idMesa'=>intval($request->getPostGet('idMesaRes')),
 			'horario'=>$request->getPostGet('horario'),
-			'dniUsuario'=>intval($user->getuserDni()),
+			// 'dniUsuario'=>intval($user->getuserDni()),
 			'id_user'  => session()->get('id_user'),
 			'idEncuesta'=>null,
 			'idPromocion'=>intval($request->getPostGet('idprom')),
@@ -106,6 +106,7 @@ class Client extends BaseController
 				$pedidosPlatos[]=[
 					'nroPedido' =>$listaNroPedido[$index],
 					'idPlato'=>$array[$index]['platos'][$p]['id'],
+					'cantidad'=>$array[$index]['platos'][$p]['cantidad'],
 				];
 			}
 
@@ -113,6 +114,7 @@ class Client extends BaseController
 				$pedidosBebidas[]=[
 					'nroPedido' =>$listaNroPedido[$index],
 					'idBebida'=>$array[$index]['bebidas'][$r]['id'],
+					'cantidad'=>$array[$index]['bebidas'][$p]['cantidad'],
 				];
 			}
 		}
@@ -313,7 +315,8 @@ class Client extends BaseController
 		$idUser=intval(session()->get('idUser'));
 		$numeroMesa = null;
 		$db = \Config\Database::connect();
-		$query=$db->query('SELECT idReserva,dniUsuario FROM reserva WHERE fechaReserva = "'.$fechaRes.'" AND id_user = "'.$idUser.'"');
+		//,dniUsuario
+		$query=$db->query('SELECT idReserva, id_user FROM reserva WHERE fechaReserva = "'.$fechaRes.'" AND id_user = "'.$idUser.'"');
 		$row = $query->getResultArray();
 			if (isset($row)==false){
 				echo json_encode(array("status" => false ));
