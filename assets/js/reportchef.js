@@ -3,7 +3,7 @@ var fechaFinChef = document.getElementById("inputFechaHastaReportePlatosChef");
 var menus = document.getElementById('contenedorRepo')
 const crearTabla = (data)=>{
 // const cabecera = ["Item", "Cantidad","Acción","Total"]
-const cabecera = ["Nombre Plato", "Alergia","Fecha Reserva", "Num Mesa", "Turno", "Horario"]
+const cabecera = ["Nombre Plato","Cantidad", "Alergia","Fecha Reserva", "Num Mesa", "Turno", "Horario"]
  // Crea las celdas
 menus.innerHTML=''
     var title   = document.createElement("h4");
@@ -25,7 +25,7 @@ for (var j = 0; j < cabecera.length; j++) {
     filaPlato.innerHTML="";
     var cad = ""
     for (var i = 0; i < data.length; i++) {
-      cad+="<tr><td>"+data[i]['nombrePlato']+"</td><td>"+data[i]['detallePlatoAlergia']+"</td><td>"+data[i]['fechaReserva']+"</td><td>"+data[i]['idMesa']+"</td><td>"+data[i]['turnoReserva']+"</td><td>"+data[i]['horario']+"</td></tr>"
+      cad+="<tr><td>"+data[i]['nombrePlato']+"</td><td>"+data[i]['cantidad']+"</td><td>"+data[i]['detallePlatoAlergia']+"</td><td>"+data[i]['fechaReserva']+"</td><td>"+data[i]['idMesa']+"</td><td>"+data[i]['turnoReserva']+"</td><td>"+data[i]['horario']+"</td></tr>"
     }
     console.log(hilera)
 
@@ -51,10 +51,16 @@ $("#btnObtenerReporteChef").click(function() {
     data:{inputFechaInicioReportePlatosChef:fechaInicioChef.value,inputFechaHastaReportePlatosChef:fechaFinChef.value},
     dataType: 'json',
     success: function (res) {
-      console.log(res)
-      crearTabla(res)
+      console.log(res.status)
+      //crearTabla(res)
+      if (res.status == true ) {
+        console.log(res.data)
+        crearTabla(res.data)
+      }else {
+        document.getElementById('nores').innerHTML = "No se encontraron resultados.";
+      }
     },error: function (data) {
-
+      document.getElementById('nores').innerHTML = "No se encontraron resultados.";
     }
   });
 

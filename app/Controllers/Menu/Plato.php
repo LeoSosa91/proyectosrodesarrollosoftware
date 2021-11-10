@@ -157,16 +157,16 @@ class Plato extends BaseController{
 			$data=array(
 				'idPlato'=>$faker->unique()->uuid,
 				'nombrePlato'=>$request->getVar('inputNameFood'),
-				'tipoPlato'=>intval($request->getVar('typeFood')),
+				'idCategoriaPlato'=>intval($request->getVar('typeFood')),
 				'descripcionPlato'=>$request->getVar('inputIngredientes'),
 				'precioPlato'=>doubleval($request->getVar('inputPrice')),
 				'created_at'=>date('Y-m-d H:i:s'),
 				'updated_at'=>date('Y-m-d H:i:s'),
-				'deleted_at'=>intval($request->getVar('stateFood')),
+				'deleted_at'=>($request->getVar('stateFood')=="0") ? null : date('Y-m-d H:i:s')
 			);
-			
+			//dd($data);
 			$foodModel= model('FoodModel');
-			if (false===$foodModel->save($data)) {
+			if (false===$foodModel->insert($data)) {
 				return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Error al agregar plato. Intentelo más tarde']);
 
 			} else {

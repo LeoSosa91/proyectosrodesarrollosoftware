@@ -28,7 +28,7 @@
                   </div>
                 <?php endif;?>
                         <h4><strong>Agregar plato</strong></h4>
-                        <form action="<?=route_to('agregarPlato')?>" method="post">
+                        <form action="<?=base_url(route_to('agregarPlato'))?>" method="post">
                             <div class="mb-3">
                                 <label class="form-label" for="inputNameFood">Ingrese nombre de plato</label>
                                 <input type="text" class="form-control" id="inputNameFood" name="inputNameFood" placeholder="Nombres" value="<?=old('inputNameFood')?>">
@@ -43,7 +43,7 @@
                                     <option <?php echo (old('typeFood') == "1") ? 'selected' : '';?> value="1">ENSALADAS</option>
                                     <option <?php echo (old('typeFood') == "2") ? 'selected' : '';?> value="2">PIZZAS</option>
                                     <option <?php echo (old('typeFood') == "3") ? 'selected' : '';?> value="3">POSTRES</option>
-                                    <option <?php echo (old('typeFood') == "4") ? 'selected' : '';?> value="3">HAMBURGUESAS</option>
+                                    <option <?php echo (old('typeFood') == "4") ? 'selected' : '';?> value="4">HAMBURGUESAS</option>
                                 </select>
                                 <?php if(session('errors.typeFood')):?>
                                 <div class="form-helper text-danger"><?=session('errors.typeFood')?></div>
@@ -53,8 +53,8 @@
                                 <label class="form-label" for="stateFood">Estado</label>
                                 <select class="form-select" id="stateFood" name="stateFood">
                                 <option <?php echo (old('stateFood') == "0") ? 'selected' : '';?> value="">---</option>
-                                    <option <?php echo (old('stateFood') == "0") ? 'selected' : '';?> value="1">Habilitado</option>
-                                    <option <?php echo (old('stateFood') == "1") ? 'selected' : '';?> value="2">Deshabilitado</option>
+                                    <option <?php echo (old('stateFood') == "0") ? 'selected' : '';?> value="0">Habilitado</option>
+                                    <option <?php echo (old('stateFood') == "1") ? 'selected' : '';?> value="1">Deshabilitado</option>
                                 </select>
                                 <?php if(session('errors.stateFood')):?>
                                 <div class="form-helper text-danger"><?=session('errors.stateFood')?></div>
@@ -62,7 +62,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="inputIngredientes" class="form-label">Ingrese ingredientes/descripcion del plato</label>
-                                <textarea class="form-control" id="inputIngredientes" name="inputIngredientes" rows="3" value="<?=old('inputIngredientes')?>"></textarea>
+                                <textarea class="form-control" id="inputIngredientes" name="inputIngredientes" rows="3" value="<?=old('inputIngredientes')?>"><?=old('inputIngredientes')?></textarea>
                                 <?php if(session('errors.inputIngredientes')):?>
                                 <div class="form-helper text-danger"><?=session('errors.inputIngredientes')?></div>
                                 <?php endif?>

@@ -1,20 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Recuperar Contraseña</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
-    <!-- Google Fonts Roboto -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
-    <link rel="stylesheet" href="<?= base_url("assets/css/styles.css")."?v=".(rand())?>">
-    <!-- MDB -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet"
-    />
-</head>
-<body class="bg-light">
+
     <header>
         <div class="card card-intro sky-gradient">
             <div class="card-body white-text rgba-black-light text-center">
@@ -87,13 +71,8 @@
     <!--Footer-->
     <?= $this->include('front/footer') ?>
     <!--Footer-->
-    
-    <!-- MDB -->
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
-    <!-- Custom scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <!-- <script type="text/javascript" src="<?=base_url();?>/assets/js/script.js"></script> -->
-    <script type="text/javascript" src="<?=base_url();?>/assets/js/register.js"></script>
+    <!--Scripts-->
+    <?= $this->include('front/recoverPass/scripts') ?>
+    <!--Scripts-->
 </body>
 </html>

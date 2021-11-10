@@ -24,4 +24,5 @@ $(document).ready(function(){
 			.css("width",percent+"%")
 			.html(percent+"%");		
 	}
+	
 });

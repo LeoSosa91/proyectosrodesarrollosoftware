@@ -5,11 +5,9 @@ class chequeofecha
 {
   public function validarFechaIngresadaInicioMayor(string $fechaInicio,string $fechaFin){
     
-    // $fecha_ini = date_create($fechaInicio);
-    // $fecha_fin = date_create($fechaFin);
-    $fecha_fin = strtotime($fechaFin.' 00:00:00');
-    $fecha_ini = strtotime($fechaInicio.' 00:00:00');
-    $fecha_actual = strtotime(date("d-m-Y 00:00:00"));
+    $fecha_fin = date($fechaFin.' 00:00:00');
+    $fecha_ini = date($fechaInicio.' 00:00:00');
+    $fecha_actual = date("d-m-Y 00:00:00");
     if($fecha_ini > $fecha_fin){
         return false;
     };
@@ -20,17 +18,18 @@ class chequeofecha
   }
   public function validarFechaIngresadaFinMenor(string $fechaInicio,string $fechaFin){
     
-    $fecha_ini = strtotime($fechaInicio.' 00:00:00');
+    // $fecha_ini = strtotime($fechaInicio.' 00:00:00');
     //$fecha_ini = date_create($fechaInicio);
     //$fecha_fin = date_create($fechaFin);
-    $fecha_fin = strtotime($fechaFin.' 00:00:00');
+    // $fecha_fin = strtotime($fechaFin.' 00:00:00');
     // $fecha_actual = strtotime(date("d-m-Y H:i:00",time()));
-    
+    $fecha_fin = date($fechaFin.' 00:00:00');
+    $fecha_ini = date($fechaInicio.' 00:00:00');
 
     if($fecha_fin < $fecha_ini){
-        return false;
+        return true;//antes false
     }else{
-        return true;
+        return false;//antes true
     }
   }
   public function validateDate(string $fecha){

@@ -43,7 +43,7 @@
                             </div>
                             <div class="mb-3 col-sm-12 col-md-6" id="contRepo2">
                                 <label class="form-label" for="inputFechaInicioReportePlatos">Ingrese fecha inicio</label>
-                                <input type="date" class="form-control"  id="inputFechaInicioReportePlatos" name="inputFechaInicioReportePlatos" value="<?= date("Y-m-d")?>">
+                                <input type="date" class="form-control"  id="inputFechaInicioReportePlatos" name="inputFechaInicioReportePlatos" value="<?=(old('inputFechaInicioReportePlatos')) ? old('inputFechaInicioReportePlatos') : date("Y-m-d") ;?>">
                                 <div class="form-helper mb-5 text-danger" id="errorini"><?=session('errors.inputFechaInicioReportePlatos')?></div>
                             </div>
                             <div class="mb-3 col-sm-12 col-md-6" id="contRepo3">

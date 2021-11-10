@@ -27,6 +27,10 @@ class User extends Entity
     {
         return $this->attributes['usersurname'];
     }
+    public function getDateTokenPassword(){
+         
+        return $this->attributes['dateTokenPassword'];
+    }
     public function getTokenPassword(){
          
         return $this->attributes['tokenPassword'];

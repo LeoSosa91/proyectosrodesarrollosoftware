@@ -114,7 +114,7 @@ class Client extends BaseController
 				$pedidosBebidas[]=[
 					'nroPedido' =>$listaNroPedido[$index],
 					'idBebida'=>$array[$index]['bebidas'][$r]['id'],
-					'cantidad'=>$array[$index]['bebidas'][$p]['cantidad'],
+					'cantidad'=>$array[$index]['bebidas'][$r]['cantidad'],
 				];
 			}
 		}

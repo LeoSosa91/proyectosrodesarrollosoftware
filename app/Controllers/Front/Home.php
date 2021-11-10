@@ -12,7 +12,7 @@ class Home extends BaseController
 	}
     public function recoverPassword()
 	{
-		return view('Front/recover_password');
+		return view('Front/recoverPass/head').view('Front/recoverPass/recover_password');
 	}
 	public function signIn(){
 		if (!$this->validate([
@@ -186,7 +186,7 @@ class Home extends BaseController
 							<h2 style="color: #e67e22; margin: 0 0 7px">¿Restablecer tu contraseña?</h2>
 							<p style="margin: 2px; font-size: 15px">
 								Hola '.$fullNameUser.'<br>
-								Si solicitaste un restablecimiento de contraseña para el correo: '.$correo.', usa el código de confirmación que aparece a continuación para completar el proceso. Si no solicitaste esto, puedes ignorar este correo electrónico.<br><br>
+								Si solicitaste un restablecimiento de contraseña para el correo: '.$correo.', presiona el "Reestablecer contraseña". Si no solicitaste esto, puedes ignorar este correo electrónico.<br><br>
 								
 							</p>
 							<div style="width: 100%; text-align: center ; padding-top: 30px;">
@@ -207,5 +207,28 @@ class Home extends BaseController
 		$email->setSubject($subject);
 		$email->setMessage($message);
 		return $email->send();
+	}
+	public function resetPassword(){
+		$request= \Config\Services::request();
+		
+		$data=array(
+			'id_user'=>$request->getPostGet('id'),
+			'tokenPassword'=>$request->getPostGet('cverifi'),
+			// 'dateTokenPassword>'=>date('Y-m-d H:i:s', strtotime('2 hours') ),
+		);
+		
+		$model = model('Usermodel');
+		
+		if (!$user=$model->where($data)->first()) {
+			// return  redirect()->back()->with('msg',['type'=> 'alert-danger', 'body'=>'El código de recuperación de contraseña no es valido. Por favor intenta de nuevo.']);
+			return redirect()->to('/recuperarPassword')->with('msg',['type'=> 'alert-danger', 'body'=>'El código de recuperación de contraseña no es valido. Por favor intenta de nuevo.']);
+		}else {
+			$fecha_actual=strtotime(date('Y-m-d H:i:s', strtotime('+2 hours')));
+			$fecha_entrada = strtotime($user->getDateTokenPassword());
+			if ($fecha_actual > $fecha_entrada) {
+				return redirect()->to('/recuperarPassword')->with('msg',['type'=> 'alert-danger','body'=>'El código de recuperación de contraseña ha expirado. Por favor intenta de nuevo.']);
+			}
+		}
+		return view('Front/reset_password',$data);
 	}
 }

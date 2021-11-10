@@ -25,6 +25,7 @@ class Validation
         FileRules::class,
         CreditCardRules::class,
         \App\Validations\chequeofecha::class,
+        \App\Validations\userValidation::class,
     ];
 
     /**
