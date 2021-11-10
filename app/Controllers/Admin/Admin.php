@@ -377,10 +377,6 @@ class Admin extends BaseController
   }
   
   public function obtenerReporteReservasDelDia($fechaInicio,$fechaFinal,$array){
-      /*$request= \Config\Services::request();
-      $fechaInicio=$request->getPostGet('inputFechaInicioReportePlatos4');
-      $fechaFinal=$request->getPostGet('inputFechaFinReportePlatos4');*/
-  
       $pdf = new \FPDF();
       $pdf->AddPage();
       $pdf->SetFont('Arial','B',16);
@@ -492,20 +488,22 @@ class Admin extends BaseController
             case '2':
                 $validation->setRules(
                     [
-                        'inputFechaInicioReportePlatos' => 'required|valid_date',
-                        'inputFechaHastaReportePlatos' => 'required|valid_date',
+                        'inputFechaInicioReportePlatos' => 'required|validarFechaIngresadaInicioMayor['.$fechaInicio.','.$fechaFinal.']|valid_date',
+                        'inputFechaHastaReportePlatos' => 'required|validarFechaIngresadaFinMenor[' . $fechaInicio . ',' . $fechaFinal . ']|valid_date',
                         'inputTipoReporte' => 'required|in_list[1,2,3,4,5]',
                     ],
-
+                    //Descomentado los input con el tema de las fechas y ya hecha las validaciones
                     [   // Errores-Mensajes
                         'inputFechaInicioReportePlatos' => [
                             'required' => 'Debe ingresar una fecha.',
-                            // 'validateDate' => 'Debe ingresar una fecha menor a la seleccionada. ',
+                            // 'fechamayor'=>'Debe ingresar una fecha mayor o igual a la fecha actual. ',
+                            'validarFechaIngresadaInicioMayor' => 'Error. Se ingreso una fecha mayor a la fecha fin. Vuelvalo a intentar. ',
                             'valid_date' => 'Debe ingresar una fecha valida.'
                         ],
                         'inputFechaHastaReportePlatos' => [
                             'required' => 'Debe ingresar una fecha.',
-                            // 'validateDate' => 'Debe ingresar una fecha menor a la seleccionada. ',
+                            // 'validarfechasfut'=>'Debe ingresar una fecha mayor a la seleccionada 2. ',
+                            'validarFechaIngresadaFinMenor' => 'Error. Se ingreso una fecha menor a la fecha inicio. Vuelvalo a intentar. ',
                             'valid_date' => 'Debe ingresar una fecha valida.'
                         ],
                         'inputTipoReporte' => [
@@ -564,7 +562,7 @@ class Admin extends BaseController
                 }
                 $db = \Config\Database::connect();
 
-                $query = $db->query('select horario, count(*) as cantidad from reserva where fechaReserva between "' . $fechaInicio . '" and "' . $fechaFinal . '" group by horario having count(*)>1 order by cantidad desc limit 5');
+                $query = $db->query('select horario, count(*) as cantidad from reserva where fechaReserva between "' . $fechaInicio . '" and "' . $fechaFinal . '" group by horario having count(*)>=1 order by cantidad desc limit 5');
                 if (count($query->getResultArray()) == 0) {
                     //dd("aca if");
                     return  redirect()->route('reportAdmin')->with('msg', ['type' => 'danger', 'body' => 'Error, no se pudo encontrar platos en el rango de fechas. Ingrese nuevamente.']);
@@ -683,22 +681,21 @@ class Admin extends BaseController
                 break;
             case '2':
                 //reservas canceladas
-                $query = $db->query('select id_user, turnoReserva, horario, idMesa, fechaReserva from reserva where (fechaReserva between "' . $fechaInicio . '" and "' . $fechaFinal . '") and (estadoReserva = "Cancelada") order by fechaReserva desc');
+                $query = $db->query('select u.dniUsuario, res.turnoReserva, res.horario, res.idMesa, res.fechaReserva from reserva as res inner join user as u on u.id_user=res.id_user where (res.fechaReserva between "' . $fechaInicio . '" and "' . $fechaFinal . '") and (res.estadoReserva = "Cancelado") order by res.fechaReserva desc');
                 echo json_encode($query->getResultArray());
                 break;
             case '3':
                 //horarios mas demandados
-                $query = $db->query('select horario, count(*) as cantidad from reserva where fechaReserva between "' . $fechaInicio . '" and "' . $fechaFinal . '" group by horario having count(*)>1 order by cantidad desc limit 5');
+                $query = $db->query('select horario, count(*) as cantidad from reserva where fechaReserva between "' . $fechaInicio . '" and "' . $fechaFinal . '" group by horario having count(*)>=1 order by cantidad desc limit 5');
                 echo json_encode($query->getResultArray());
                 break;
             case '4':
                 //clientes no asistencia
-                $query = $db->query('select u.dniUsuario, u.nombreUsuario, u.apellidoUsuario, u.emailUsuario, u.telefono, r.fechaReserva from reserva as r inner join usuario as u where (r.fechaReserva between "' . $fechaInicio . '" and "' . $fechaFinal . '") and (r.asistenciaReserva = "No asistio") and r.id_user = u.id_user order by u.apellidoUsuario asc');
+                $query = $db->query('select u.dniUsuario, u.username, u.usersurname, u.useremail, u.usertel, r.fechaReserva from reserva as r inner join user as u where (r.fechaReserva between "' . $fechaInicio . '" and "' . $fechaFinal . '") and (r.asistenciaReserva = "No asistio") and r.id_user = u.id_user order by u.usersurname asc');
                 echo json_encode($query->getResultArray());
                 break;
             case '5':
                 //reservas del dia
-
                 $query = $db->query('select u.dniUsuario,res.turnoReserva, res.horario, res.idMesa, res.fechaReserva, res.asistenciaReserva from reserva as res INNER join user u on u.id_user=res.id_user where res.fechaReserva between "' . $fechaInicio . '" and "' . $fechaFinal . '" and (res.estadoReserva = "En Curso") order by res.fechaReserva asc');
                 echo json_encode($query->getResultArray());
                 break;
@@ -763,13 +760,18 @@ class Admin extends BaseController
         $request = \Config\Services::request();
         $id = $request->getPostGet('idUserHabilitar');
 
-        $UserModel = model('UserModel');
+        $userModel = model('UserModel');
         $data = [
             'deleted_at' => null
         ];
-        $UserModel->update($id, $data);
+        
+        if (!$userModel->update($id, $data)) {
+            return  redirect()->route('listadoClientes')->with('msg', ['type' => 'danger', 'body' => 'No se pudo habilitar al cliente.Intentelo más tarde']);;
+        }else{
+            return  redirect()->route('listadoClientes')->with('msg', ['type' => 'success', 'body' => 'Se pudo habilitar con exito al cliente.']);;
+        }
 
-        return  redirect()->route('listadoClientes')->with('msg', ['type' => 'success', 'body' => 'Se pudo habilitar con exito al cliente.']);;
+        
     }
     public function borrarCliente()
     {
@@ -844,8 +846,6 @@ class Admin extends BaseController
         );
         if (!$validation->withRequest($this->request)->run()) {
             echo json_encode(array("status" => false, 'data' => $validation->getErrors()));
-            //dd($validation->getErrors());
-            //return  redirect()->back()->with('errors',$validation->getErrors())->withInput();
         } else {
             echo json_encode(array("status" => true, 'data' => []));
         }

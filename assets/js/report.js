@@ -30,9 +30,15 @@ const crearTabla = (data) => {
       }
       filaPlato.innerHTML = "";
       var cad = ""
-      for (var i = 0; i < data.length; i++) {
-        cad += "<tr><td>" + data[i]['nombrePlato'] + "</td><td>" + data[i]['cantidad'] + "</td>"
+      var cadFoot = ""
+      if (data.length>=1) {
+        for (var i = 0; i < data.length; i++) {
+          cad += "<tr><td>" + data[i]['nombrePlato'] + "</td><td>" + data[i]['cantidad'] + "</td>"
+        }  
+      } else {
+        cadFoot=  '<tr><td colspan="2" class="text-center fw-bold text-uppercase">Sin datos para mostrar</td></tr>'
       }
+      tblFoot.innerHTML = cadFoot
       console.log(hilera)
 
       // agrega la hilera al final de la tabla (al final del elemento tblbody)
@@ -41,6 +47,8 @@ const crearTabla = (data) => {
       //tblBody.appendChild(filaPlato);
       tblBody.innerHTML = cad
       tabla.appendChild(tblBody);
+      tabla.appendChild(tblFoot);
+      tabla.setAttribute("class", "table table-hover");
       repos.appendChild(title);
       repos.appendChild(parrafo);
       repos.appendChild(tabla);
@@ -69,9 +77,15 @@ const crearTabla = (data) => {
       }
       filaPlato.innerHTML = "";
       var cad = ""
-      for (var i = 0; i < data.length; i++) {
-        cad += "<tr><td>" + data[i]['dniUsuario'] + "</td><td>" + data[i]['turnoReserva'] + "</td><td>" + data[i]['horario'] + "</td><td>" + data[i]['idMesa'] + "</td><td>" + data[i]['fechaReserva'] + "</td>"
+      var cadFoot = ''
+      if (data.length>=1) {
+        for (var i = 0; i < data.length; i++) {
+          cad += "<tr><td>" + data[i]['dniUsuario'] + "</td><td>" + data[i]['turnoReserva'] + "</td><td>" + data[i]['horario'] + "</td><td>" + data[i]['idMesa'] + "</td><td>" + data[i]['fechaReserva'].split('-').reverse().join('/') + "</td>"
+        }  
+      } else {
+        cadFoot=  '<tr><td colspan="5" class="text-center fw-bold text-uppercase">Sin datos para mostrar</td></tr>'
       }
+      tblFoot.innerHTML = cadFoot
       console.log(hilera)
 
       // agrega la hilera al final de la tabla (al final del elemento tblbody)
@@ -80,6 +94,8 @@ const crearTabla = (data) => {
       //tblBody.appendChild(filaPlato);
       tblBody.innerHTML = cad
       tabla.appendChild(tblBody);
+      tabla.appendChild(tblFoot);
+      tabla.setAttribute("class", "table table-hover");
       repos.appendChild(title);
       repos.appendChild(parrafo);
       repos.appendChild(tabla);
@@ -108,10 +124,16 @@ const crearTabla = (data) => {
       }
       filaPlato.innerHTML = "";
       var cad = ""
-      for (var i = 0; i < data.length; i++) {
-        cad += "<tr><td>" + data[i]['horario'] + "</td><td>" + data[i]['cantidad'] + "</td>"
+      var cadFoot = ''
+      if (data.length>=1) {
+        for (var i = 0; i < data.length; i++) {
+          cad += "<tr><td>" + data[i]['horario'] + "</td><td>" + data[i]['cantidad'] + "</td>"
+        }  
+      } else {
+        cadFoot=  '<tr><td colspan="2" class="text-center fw-bold text-uppercase" >Sin datos para mostrar</td></tr>'
       }
-      console.log(hilera)
+      tblFoot.innerHTML = cadFoot
+      // console.log(hilera)
 
       // agrega la hilera al final de la tabla (al final del elemento tblbody)
       tblHead.appendChild(hilera);
@@ -119,6 +141,8 @@ const crearTabla = (data) => {
       //tblBody.appendChild(filaPlato);
       tblBody.innerHTML = cad
       tabla.appendChild(tblBody);
+      tabla.appendChild(tblFoot);
+      tabla.setAttribute("class", "table table-hover");
       repos.appendChild(title);
       repos.appendChild(parrafo);
       repos.appendChild(tabla);
@@ -147,9 +171,15 @@ const crearTabla = (data) => {
       }
       filaPlato.innerHTML = "";
       var cad = ""
-      for (var i = 0; i < data.length; i++) {
-        cad += "<tr><td>" + data[i]['dniUsuario'] + "</td><td>" + data[i]['username'] + "</td><td>" + data[i]['usersurname'] + "</td><td>" + data[i]['useremail'] + "</td><td>" + data[i]['usertel'] + "</td><td>" + data[i]['fechaReserva'] + "</td>"
+      var cadFoot = ""
+      if (data.length>=1) {
+        for (var i = 0; i < data.length; i++) {
+          cad += "<tr><td>" + data[i]['dniUsuario'] + "</td><td>" + data[i]['username'] + "</td><td>" + data[i]['usersurname'] + "</td><td>" + data[i]['useremail'] + "</td><td>" + data[i]['usertel'] + "</td><td>" + data[i]['fechaReserva'].split('-').reverse().join('/') + "</td>"
+        }  
+      } else {
+        cadFoot=  '<tr><td colspan="6" class="text-center fw-bold text-uppercase" >Sin datos para mostrar</td></tr>'
       }
+      tblFoot.innerHTML = cadFoot
       console.log(hilera)
 
       // agrega la hilera al final de la tabla (al final del elemento tblbody)
@@ -158,6 +188,8 @@ const crearTabla = (data) => {
       //tblBody.appendChild(filaPlato);
       tblBody.innerHTML = cad
       tabla.appendChild(tblBody);
+      tabla.appendChild(tblFoot);
+      tabla.setAttribute("class", "table table-hover");
       repos.appendChild(title);
       repos.appendChild(parrafo);
       repos.appendChild(tabla);
@@ -185,9 +217,16 @@ const crearTabla = (data) => {
       }
       filaPlato.innerHTML = "";
       var cad = ""
-      for (var i = 0; i < data.length; i++) {
-        cad += "<tr><td>" + data[i]['dniUsuario'] + "</td><td>" + data[i]['turnoReserva'] + "</td><td>" + data[i]['horario'] + "</td><td>" + data[i]['idMesa'] + "</td><td>" + data[i]['fechaReserva'] + "</td><td>" + data[i]['asistenciaReserva'] + "</td>"
+      var cadFoot = ""
+      if (condition) {
+        for (var i = 0; i < data.length; i++) {
+          cad += "<tr><td>" + data[i]['dniUsuario'] + "</td><td>" + data[i]['turnoReserva'] + "</td><td>" + data[i]['horario'] + "</td><td>" + data[i]['idMesa'] + "</td><td>" + data[i]['fechaReserva'].split('-').reverse().join('/') + "</td><td>" + data[i]['asistenciaReserva'] + "</td>"
+        }  
+      } else {
+        cadFoot=  '<tr><td colspan="6" class="text-center fw-bold text-uppercase" >Sin datos para mostrar</td></tr>'
       }
+      tblFoot.innerHTML = cadFoot
+      
       console.log(hilera)
 
       // agrega la hilera al final de la tabla (al final del elemento tblbody)
@@ -196,6 +235,8 @@ const crearTabla = (data) => {
       //tblBody.appendChild(filaPlato);
       tblBody.innerHTML = cad
       tabla.appendChild(tblBody);
+      tabla.appendChild(tblFoot);
+      tabla.setAttribute("class", "table table-hover");
       repos.appendChild(title);
       repos.appendChild(parrafo);
       repos.appendChild(tabla);
@@ -218,7 +259,7 @@ $("#btnObtenerReporte").click(function () {
       validarreportepasad()
       break;
     case "2":
-      validarreportepasad()
+      validarreporte()
       break;
     case "3":
       validarreportepasad()

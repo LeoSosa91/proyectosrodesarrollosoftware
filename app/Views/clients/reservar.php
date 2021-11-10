@@ -23,7 +23,7 @@
             <form action="" method="post">
               <fieldset id="campo1">
                 <div class="mb-3 col-sm-12 col-md-6">
-                  <label class="form-label" for="selectCantPers">Cantidad de personas</label>
+                  <label class="form-label" for="selectCantPers">Cantidad de personas <span class="text-danger">*</span></label>
                   <select class="form-select" id="selectCantPers" aria-label="Default select example">
                     <option selected value="0">---</option>
                     <option value="1">1</option>
@@ -33,11 +33,11 @@
                   </select>
                 </div>
                 <div class="mb-3 col-sm-12 col-md-6">
-                  <label class="form-label" for="inputFecha">Fecha</label>
+                  <label class="form-label" for="inputFecha">Fecha <span class="text-danger">*</span></label>
                   <input type="date" class="form-control" id="inputFecha" name="inputFecha" value="<?= date("Y-m-d") ?>" min="<?= date("Y-m-d") ?>">
                 </div>
                 <div class="mb-3 col-sm-12 col-md-6">
-                  <label class="form-label" for="idTurnoRes">Turno</label>
+                  <label class="form-label" for="idTurnoRes">Turno <span class="text-danger">*</span></label>
                   <select class="form-select" id="idTurnoRes" aria-label="Default select example">
                     <option value="0" selected="selected">Seleccione el turno</option>
                     <option value="Almuerzo">Almuerzo</option>
@@ -45,7 +45,7 @@
                   </select>
                 </div>
                 <div class="mb-3 col-sm-12 col-md-6">
-                  <label class="form-label" for="idHora">Hora</label>
+                  <label class="form-label" for="idHora">Hora <span class="text-danger">*</span></label>
                   <select class="form-select" id="idHora" aria-label="Default select example">
                     <option value="0" selected="selected">Seleccione un horario...</option>
                   </select>
@@ -192,7 +192,8 @@
         <h4>TOTAL A PAGAR: $ <span id="idPTotalAPagar"></span></h4>
         <h5>¿Desea registrar la reserva con los datos solicitados</h5>
       </div>
-      <form class="" action="<?= base_url() . '/clients/reservar/guardarReserva'  ?>" method="post">
+      <!-- . '/clients/reservar/guardarReserva'  -->
+      <form class="" action="<?= base_url(route_to('guardarReserva')); ?>" method="post">
         <input type="hidden" id="idUser" name="idUser" value="<?= session('id_user')  ?>">
         <input type="hidden" id="idMesaRes" name="idMesaRes" value="">
         <input type="hidden" id="fechaRes" name="fechaRes" value="">

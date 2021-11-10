@@ -105,7 +105,7 @@
                 <div class="col-12">
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="list-fecha-horario" role="tabpanel" aria-labelledby="list-fecha-horario-list">
-                            <form action="<?= base_url('/clients/reservar/modificarDatosReserva')?>" method="post">
+                            <form action="<?=base_url(route_to('modificarDatosReserva'))?>" method="post">
                                 <div class="mt-3 mb-3 col-sm-12">
                                     <label class="form-label" for="selectCantPers">Cantidad de personas</label>
                                     <select class="form-select" id="selectCantPers" disabled aria-label="Default select example">
@@ -232,7 +232,7 @@
             
         </div>
         <div class="modal-footer flex-center">
-            <form id="formCancelarReserva" action="<?=base_url('clients/reservar/cancelarReserva')?> " method="post">
+            <form id="formCancelarReserva" action="<?=base_url(route_to('cancelarReserva'))?> " method="post">
             <input type="hidden" name="tipoCancelacion" id="tipoCancelacion" value="">
             <input type="hidden" name="idReservaCancelar" id="idReservaCancelar" value=" ">
             <input type="submit" value="SI" class="btn btn-danger">

@@ -102,7 +102,7 @@ class Plato extends BaseController{
 				'idCategoriaPlato'=>intval($request->getVar('typeFood')),
 				'descripcionPlato'=>strtoupper($request->getVar('inputIngredientes')),
 				'precioPlato'=>doubleval($request->getVar('inputPrice')),
-				'updated_at'=>date('Y-m-d H:i:s'),
+				// 'updated_at'=>date('Y-m-d H:i:s'),
 				'deleted_at'=>($request->getVar('stateFood')=="0") ? null : date('Y-m-d H:i:s')
 			);
 			$foodModel= model('FoodModel');

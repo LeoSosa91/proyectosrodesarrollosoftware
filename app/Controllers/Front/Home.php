@@ -15,6 +15,7 @@ class Home extends BaseController
 		return view('Front/recoverPass/head').view('Front/recoverPass/recover_password');
 	}
 	public function signIn(){
+		$db      = \Config\Database::connect();
 		if (!$this->validate([
 			'email'=>'required|valid_email',
 			'password'=>'required'
@@ -33,6 +34,10 @@ class Home extends BaseController
 		$password=trim($this->request->getVar('password'));
 
 		$model= model('UserModel');
+		// $query=$db->query('call buscarReserva("'.$data['fechaReserva'].'","'.$data['horario'].'","'.$data['idMesa'].'")');
+		// if ($db->query('call verificarUsuarioHabilitado("'.session()->get('id_user').'")')) {
+		// 	return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Las credenciales no son validas.']);
+		// }
 		if (!$user=$model->getUserBy('useremail',$email)) {
 			
 			return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Este usuario no se encuentra registrado en el sistema. O se encuentra deshabilitada la cuenta.']);
@@ -226,6 +231,7 @@ class Home extends BaseController
 			$fecha_actual=strtotime(date('Y-m-d H:i:s', strtotime('+2 hours')));
 			$fecha_entrada = strtotime($user->getDateTokenPassword());
 			if ($fecha_actual > $fecha_entrada) {
+				
 				return redirect()->to('/recuperarPassword')->with('msg',['type'=> 'alert-danger','body'=>'El código de recuperación de contraseña ha expirado. Por favor intenta de nuevo.']);
 			}
 		}

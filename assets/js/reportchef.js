@@ -24,9 +24,15 @@ for (var j = 0; j < cabecera.length; j++) {
     }
     filaPlato.innerHTML="";
     var cad = ""
-    for (var i = 0; i < data.length; i++) {
-      cad+="<tr><td>"+data[i]['nombrePlato']+"</td><td>"+data[i]['cantidad']+"</td><td>"+data[i]['detallePlatoAlergia']+"</td><td>"+data[i]['fechaReserva']+"</td><td>"+data[i]['idMesa']+"</td><td>"+data[i]['turnoReserva']+"</td><td>"+data[i]['horario']+"</td></tr>"
+    var cadFoot = ''
+    if (data.length>=1) {
+      for (var i = 0; i < data.length; i++) {
+        cad+="<tr><td>"+data[i]['nombrePlato']+"</td><td>"+data[i]['cantidad']+"</td><td>"+data[i]['detallePlatoAlergia']+"</td><td>"+data[i]['fechaReserva'].split('-').reverse().join('/')+"</td><td>"+data[i]['idMesa']+"</td><td>"+data[i]['turnoReserva']+"</td><td>"+data[i]['horario']+"</td></tr>"
+      }  
+    } else {
+      cadFoot=  '<tr><td colspan="7">Sin datos para mostrar</td></tr>'
     }
+    tblFoot.innerHTML = cadFoot
     console.log(hilera)
 
     // agrega la hilera al final de la tabla (al final del elemento tblbody)
@@ -35,6 +41,7 @@ for (var j = 0; j < cabecera.length; j++) {
     //tblBody.appendChild(filaPlato);
     tblBody.innerHTML = cad
     tabla.appendChild(tblBody);
+    tabla.appendChild(tblFoot);
     menus.appendChild(title);
     menus.appendChild(parrafo);
     menus.appendChild(tabla);

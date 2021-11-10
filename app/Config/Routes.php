@@ -57,10 +57,6 @@ $routes->group('menu', function ($routes) {
 		$routes->post('agregarPlato', 'Plato::agregarPlato', ['namespace' => 'App\Controllers\Menu', 'as' => 'agregarPlato']);
 		$routes->post('modificarPlato', 'Plato::modificarPlato', ['namespace' => 'App\Controllers\Menu', 'as' => 'modificarPlato']);
 	});
-
-
-
-
 	$routes->group('promocion', function ($routes) {
 		$routes->post('buscarPromocion', 'Promocion::buscarPromocion', ['namespace' => 'App\Controllers\Menu', 'as' => 'buscarPromocion']);
 		$routes->post('editarPromocion', 'Promocion::editarPromocion', ['namespace' => 'App\Controllers\Menu', 'as' => 'editarPromocion']);
@@ -130,13 +126,14 @@ $routes->group('clients', ['filter' => 'auth:Cliente'], function ($routes) {
 		$routes->add('reservasRealizadas', 'Client::reservasRealizadas', ['as' => 'reservasRealizadasClient', 'namespace' => 'App\Controllers\Client']);
 	});
 	$routes->group('reservar', function ($routes) {
-		$routes->add('', 'Client::reserva', ['as' => 'reservarClient', 'namespace' => 'App\Controllers\Client']);
-		$routes->post('consultarReserva', 'Client::consultarReserva', ['as' => 'consultarReserva', 'namespace' => 'App\Controllers\Client']);
-		$routes->post('guardarReserva', 'Client::guardarReserva', ['as' => 'guardarReserva', 'namespace' => 'App\Controllers\Client']);
-		$routes->post('cancelarReserva', 'Client::cancelarReserva', ['as' => 'cancelarReserva', 'namespace' => 'App\Controllers\Client']);
+		//$routes->add('', 'Client::reserva', ['as' => 'reservarClient', 'namespace' => 'App\Controllers\Client']);
+		$routes->add('', 'Reserva::index', ['as' => 'reservarClient', 'namespace' => 'App\Controllers\Reserva']);
+		$routes->post('consultarReserva', 'Reserva::consultarReserva', ['as' => 'consultarReserva', 'namespace' => 'App\Controllers\Reserva']);
+		$routes->post('guardarReserva', 'Reserva::guardarReserva', ['as' => 'guardarReserva', 'namespace' => 'App\Controllers\Reserva']);
+		$routes->post('cancelarReserva', 'Reserva::cancelarReserva', ['as' => 'cancelarReserva', 'namespace' => 'App\Controllers\Reserva']);
 		$routes->post('obtenerReservaCliente', 'Client::obtenerReservaCliente', ['as' => 'obtenerReservaCliente', 'namespace' => 'App\Controllers\Client']);
-		$routes->post('modificarDatosReserva', 'Client::modificarDatosReserva', ['as' => 'modificarDatosReserva', 'namespace' => 'App\Controllers\Client']);
-		$routes->post('modificarPedidoPlatoBebidaCliente', 'Client::modificarPedidoPlatoBebidaCliente', ['as' => 'modificarPedidoPlatoBebidaCliente', 'namespace' => 'App\Controllers\Client']);
+		$routes->post('modificarDatosReserva', 'Reserva::modificarDatosReserva', ['as' => 'modificarDatosReserva', 'namespace' => 'App\Controllers\Reserva']);
+		$routes->post('modificarPedidoPlatoBebidaCliente', 'Reserva::modificarPedidoPlatoBebidaCliente', ['as' => 'modificarPedidoPlatoBebidaCliente', 'namespace' => 'App\Controllers\Reserva']);
 	});
 
 	$routes->post('guardarInfoPersonal', 'Client::guardarInfoPersonal', ['as' => 'guardarInfoPersonalClient', 'namespace' => 'App\Controllers\Client']);
