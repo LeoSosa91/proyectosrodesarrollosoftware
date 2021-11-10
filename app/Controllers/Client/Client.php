@@ -30,6 +30,114 @@ class Client extends BaseController
 		];
 		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Clients/infoClient');
 	}
+	public function guardarInfoPersonal(){
+		$validation =  \Config\Services::validation();
+		$request= \Config\Services::request();
+		$userModel= model('UserModel');
+
+		$data=array(
+			'id_user'=>$request->getVar('idUser'),
+			'username'=>$request->getVar('inputName'),
+			'usersurname'=>$request->getVar('inputSurname'),
+			'dniUsuario'=>$request->getVar('inputDni'),
+			'userBirthday'=>$request->getVar('inputFecNac'),
+			'useradress'=>$request->getVar('inputAddress'),
+			'usertel'=>$request->getVar('inputTel'),
+			'useremail'=>$request->getVar('inputEmail'),
+		);
+		// dd($data);
+		$validation->setRules([
+			'inputName' => 'required|min_length[5]',
+		  	'inputSurname'=>'required|min_length[3]',
+			'inputDni'=>'required|min_length[7]|max_length[8]|numeric',
+			'inputFecNac'=>'required',
+			'inputAddress'=>'required|min_length[3]|alpha_numeric_space',
+			'inputTel'=>'required|min_length[7]|numeric',
+			'inputEmail'=>'required|valid_email',
+		],
+		[   // Errores-Mensajes
+			'inputName' =>[
+				'required'=>'Debe ingresar una contraseña',
+				'min_length'=>'Nombre ingresado invalido',
+			],
+			'inputSurname' => [
+				'required' => 'Debe ingresar una contraseña',
+				'min_length'=>'Apellido ingresado invalido',
+			],
+			'inputDni' => [
+				'required' => 'Debe ingresar una contraseña',
+				'min_length'=>'DNI ingresado invalido',
+				'max_length'=>'DNI ingresado invalido',
+				'numeric'=>'Debe ingresar un DNI valido sin caracteres alfabeticos',
+			],
+			'inputFecNac' => [
+				'required' => 'Debe ingresar una fecha de nacimiento',
+			],
+			'inputAddress' => [
+				'required' => 'Debe ingresar una direccion',
+				'min_length'=>'Debe ingresar una direccion valida',
+				'alpha_numeric_space'=>'Debe ingresar una direccion sin caracteres especiales'
+			],
+			'inputTel' => [
+				'required' => 'Debe ingresar un numero de telefono',
+				'min_length'=>'Debe ingresar un numero de telefono valido',
+				'numeric'=>'Debe ingresar un numero de telefono valido sin caracteres alfabeticos',
+			],
+			'inputEmail' => [
+				'required' => 'Debe ingresar una contraseña',
+				'valid_email'=>'Debe ingresar una direccion de correo valida',
+			],
+		]
+		);
+		if (!$validation->withRequest($this->request)->run()) {
+			return  redirect()->back()->with('errors',$validation->getErrors())->withInput();
+		}else {
+			$user= new User($data);
+			if (true!=$userModel->update($user->getIDUser(), ['username' => $user->getUsername(),	'usersurname'=>$user->getUsersurname(),'dniUsuario'=>$user->getuserDni(),'userBirthday'=>$user->getuserBirthday(),'useradress'=>$user->getuseradress(),'usertel'=>$user->getUserTel(),'useremail'=>$user->getuseremail()])) {
+				return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Error al actualizar sus datos. Vuelve a intentarlo.'])->withInput();
+			}else {
+				return  redirect()->back()->with('msg',['type'=> 'success', 'body'=>'El usuario pudo modificar sus datos con exito.']);
+			}
+		}
+	}
+	public function guardarPassword()
+	{
+		$validation =  \Config\Services::validation();
+		$request= \Config\Services::request();
+		$userModel= model('UserModel');
+		
+		$data=array(
+			'id_user'=>$request->getVar('idUser'),
+			'password'=>$request->getVar('inputPasswordNew')
+		);
+		$validation->setRules([
+			'inputPasswordNew' => 'required|min_length[8]|matches[inputConfirmPasswordNew]',
+		  	'inputConfirmPasswordNew'=>'required|min_length[8]',
+		],
+		[   // Errores-Mensajes
+			'inputPasswordNew' =>[
+				'required'=>'Debe ingresar una contraseña',
+				'min_length'=>'Usa 8 caracteres o más para tu contraseña',
+				'matches' => 'Las contrase&ntilde;as no coinciden. Vuelve a intentarlo.'
+			],
+			'inputConfirmPasswordNew' => [
+				'required' => 'Debe ingresar una contraseña',
+				'min_length'=>'Usa 8 caracteres o más para tu contraseña',
+			],
+			
+		]
+		);
+		if (!$validation->withRequest($this->request)->run()) {
+			return  redirect()->back()->with('errors',$validation->getErrors());
+		}else {
+			$user= new User($data);
+			if (true!=$userModel->update($user->getIDUser(), ['password' => $user->getPassword(),	'tokenPassword'=>null,'dateTokenPassword'=>null])) {
+				return  redirect()->back()->with('msg',['type'=> 'danger', 'body'=>'Error al cambiar su contrase&ntilde;a. Vuelve a intentarlo.']);
+			}else {
+				return  redirect()->back()->with('msg',['type'=> 'success', 'body'=>'El usuario pudo cambiar su contrase&ntilde;a. con exito.']);
+			}
+		}
+	}
 	public function reserva()
 	{
 		$modelPlatos= model('FoodModel');

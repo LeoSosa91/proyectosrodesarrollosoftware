@@ -40,7 +40,6 @@ class Plato extends BaseController{
 		}
 		$data['title']="Platos";
 		$data['platos']=$cardsPlatos;
-		// .view('Front/script_client')
 		return view('Front/head',$data).view('Front/header').view('Front/sidebar').view('Clients/food',$data);
 	}
 	public function buscarPlato()
@@ -99,9 +98,9 @@ class Plato extends BaseController{
 			return  redirect()->back()->with('errors',$validation->getErrors())->withInput();
 		}else {
 			$data=array(
-				'nombrePlato'=>$request->getVar('inputNameFood'),
+				'nombrePlato'=>strtoupper($request->getVar('inputNameFood')),
 				'idCategoriaPlato'=>intval($request->getVar('typeFood')),
-				'descripcionPlato'=>$request->getVar('inputIngredientes'),
+				'descripcionPlato'=>strtoupper($request->getVar('inputIngredientes')),
 				'precioPlato'=>doubleval($request->getVar('inputPrice')),
 				'updated_at'=>date('Y-m-d H:i:s'),
 				'deleted_at'=>($request->getVar('stateFood')=="0") ? null : date('Y-m-d H:i:s')
@@ -156,9 +155,9 @@ class Plato extends BaseController{
 
 			$data=array(
 				'idPlato'=>$faker->unique()->uuid,
-				'nombrePlato'=>$request->getVar('inputNameFood'),
+				'nombrePlato'=>strtoupper($request->getVar('inputNameFood')),
 				'idCategoriaPlato'=>intval($request->getVar('typeFood')),
-				'descripcionPlato'=>$request->getVar('inputIngredientes'),
+				'descripcionPlato'=>strtoupper($request->getVar('inputIngredientes')),
 				'precioPlato'=>doubleval($request->getVar('inputPrice')),
 				'created_at'=>date('Y-m-d H:i:s'),
 				'updated_at'=>date('Y-m-d H:i:s'),
